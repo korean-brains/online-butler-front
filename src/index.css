@@ -15,8 +15,11 @@ html {
 
 body {
   background: white;
-  max-width: 400px;
-  margin: auto;
-  padding-bottom: 50px;
-  /* height: 100dvh; */
+}
+
+@media (min-width: 768px) {
+  body {
+    max-width: 400px;
+    margin: auto;
+  }
 }
