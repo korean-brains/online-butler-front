@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import login from "../api/post/login";
 import { AuthenticationContext } from "../contexts/AuthenticationContext";
 
@@ -7,12 +7,14 @@ const LoginPage = () => {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const { setAuthentication } = useContext(AuthenticationContext);
+  const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       const authentication = await login(username, password);
       setAuthentication(authentication);
+      navigate("/");
     } catch (error) {
       alert("로그인 실패");
     }
