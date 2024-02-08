@@ -1,10 +1,7 @@
+import { Member } from "./Member";
+
 export default interface Post {
-  member: {
-    id: number;
-    profile: string;
-    nickname: string;
-    followed: boolean;
-  };
+  member: Member;
   post: {
     published: Date;
     description: string;
@@ -15,4 +12,9 @@ export default interface Post {
     likeNum: number;
     commentNum: number;
   };
+}
+
+export interface MemberPostItem {
+  id: number;
+  thumbnail: string;
 }

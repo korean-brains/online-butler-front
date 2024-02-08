@@ -4,7 +4,7 @@ import BottomNavigation from "../components/bottomNavigation/BottomNavigation";
 const RootPage = () => {
   return (
     <div className="flex h-dvh flex-col">
-      <div className="flex-grow overflow-y-scroll">
+      <div className="scrollbar-hide flex-grow overflow-y-scroll">
         <Outlet />
       </div>
       <BottomNavigation />

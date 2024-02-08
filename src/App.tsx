@@ -6,6 +6,7 @@ import MyPage from "./pages/MyPage";
 import LoginPage from "./pages/LoginPage";
 import { AuthenticationProvider } from "./contexts/AuthenticationContext";
 import "./api/mocks";
+import PostPage from "./pages/PostPage";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: "/mypage",
         element: <MyPage />,
+      },
+      {
+        path: "/post/:id",
+        element: <PostPage />,
       },
     ],
   },
