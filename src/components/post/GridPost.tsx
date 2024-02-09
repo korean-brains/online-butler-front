@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { MemberPostItem } from "../../types/Post";
-import getMemberPosts from "../../api/post/getMemberPosts";
+import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
+import useFetchMemberPosts from "../../hooks/useFetchMemberPosts";
+import useIntersect from "../../hooks/useIntersect";
 
 interface GridPostProps {
   id: number;
@@ -9,24 +9,12 @@ interface GridPostProps {
 
 const GridPost = ({ id }: GridPostProps) => {
   const [tab, setTab] = useState<string>("write");
-  const [writePosts, setWritePosts] = useState<MemberPostItem[]>([]);
-  const [likePosts, setLikePosts] = useState<MemberPostItem[]>([]);
-
   const handleWriteTab = () => {
     setTab("write");
   };
   const handleLikeTab = () => {
     setTab("like");
   };
-
-  useEffect(() => {
-    if (tab === "write" && writePosts.length === 0) {
-      getMemberPosts(id).then((posts) => setWritePosts(posts));
-    }
-    if (tab === "like" && likePosts.length === 0) {
-      getMemberPosts(id).then((posts) => setLikePosts(posts));
-    }
-  }, [id, tab, writePosts, likePosts]);
 
   return (
     <div>
@@ -44,29 +32,49 @@ const GridPost = ({ id }: GridPostProps) => {
           좋아요한 글
         </button>
       </div>
-      <div className="grid grid-cols-3 gap-1 p-1">
-        {tab === "write" &&
-          writePosts.map((post) => (
-            <Link to={`/post/${post.id}`} key={post.id}>
-              <img
-                src={post.thumbnail}
-                alt="thumbnail"
-                className="aspect-square object-cover"
-              />
-            </Link>
-          ))}
+      <Grid id={id} type={tab} />
+    </div>
+  );
+};
 
-        {tab === "like" &&
-          likePosts.map((post) => (
-            <Link to={`/post/${post.id}`} key={post.id}>
-              <img
-                src={post.thumbnail}
-                alt="thumbnail"
-                className="aspect-square object-cover"
-              />
-            </Link>
-          ))}
-      </div>
+interface GridProps {
+  id: number;
+  type: string;
+}
+
+const Grid = ({ id, type }: GridProps) => {
+  const { data, hasNextPage, isFetching, fetchNextPage } = useFetchMemberPosts(
+    id,
+    type,
+    {
+      size: 10,
+    },
+  );
+
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    if (hasNextPage && !isFetching) {
+      fetchNextPage();
+    }
+  });
+
+  const items = useMemo(
+    () => (data ? data.pages.flatMap(({ data }) => data.contents) : []),
+    [data],
+  );
+
+  return (
+    <div className="grid grid-cols-3 gap-1 p-1">
+      {items.map((item) => (
+        <Link to={`/post/${item.id}`} key={item.id}>
+          <img
+            src={item.thumbnail}
+            alt="thumbnail"
+            className="aspect-square object-cover"
+          />
+        </Link>
+      ))}
+      <div ref={ref}></div>
     </div>
   );
 };

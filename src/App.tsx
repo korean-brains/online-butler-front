@@ -7,6 +7,10 @@ import LoginPage from "./pages/LoginPage";
 import { AuthenticationProvider } from "./contexts/AuthenticationContext";
 import "./api/mocks";
 import PostPage from "./pages/PostPage";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -44,9 +48,12 @@ const router = createBrowserRouter([
 const App = () => {
   return (
     <>
-      <AuthenticationProvider>
-        <RouterProvider router={router} />
-      </AuthenticationProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthenticationProvider>
+          <RouterProvider router={router} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </AuthenticationProvider>
+      </QueryClientProvider>
     </>
   );
 };
