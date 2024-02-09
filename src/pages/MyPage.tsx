@@ -1,13 +1,19 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthenticationContext } from "../contexts/AuthenticationContext";
 import { AuthenticationContextType } from "../types/Authentication";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsis } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEllipsis,
+  faGear,
+  faHandHoldingDollar,
+  faReceipt,
+} from "@fortawesome/free-solid-svg-icons";
 import MemberIntroduce from "../components/member/MemberIntroduce";
 import getMemberIntroduce from "../api/member/getMemberIntroduce";
 import { MemberIntroduce as MemberIntroduceType } from "../types/Member";
 import GridPost from "../components/post/GridPost";
+import Modal from "../components/modal/Modal";
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -17,9 +23,10 @@ const MyPage = () => {
   const [memberIntroduce, setMemberIntroduce] = useState<MemberIntroduceType>(
     {} as MemberIntroduceType,
   );
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const onClick = () => {
-    console.log("더보기");
+    setIsModalOpen(true);
   };
 
   useEffect(() => {
@@ -48,6 +55,29 @@ const MyPage = () => {
       </div>
       <MemberIntroduce memberIntroduce={memberIntroduce} />
       <GridPost id={memberIntroduce.id} />
+      {isModalOpen && (
+        <Modal closeModal={() => setIsModalOpen(false)}>
+          <div className="flex min-w-[300px] flex-col gap-5">
+            <Link to={"/profile"}>
+              <FontAwesomeIcon icon={faGear} className="w-[24px]" />
+              <span className="ms-3">프로필 설정</span>
+            </Link>
+            <Link to={"/donation"}>
+              <FontAwesomeIcon
+                icon={faHandHoldingDollar}
+                className="w-[24px]"
+              />
+              <span className="ms-3">후원 내역</span>
+            </Link>
+            <Link to={"/adjustment"}>
+              <FontAwesomeIcon icon={faReceipt} className="w-[24px]" />
+              <span className="ms-3">정산하기</span>
+            </Link>
+            <button className="text-left">로그아웃</button>
+            <button className="text-left">회원탈퇴</button>
+          </div>
+        </Modal>
+      )}
     </>
   );
 };
