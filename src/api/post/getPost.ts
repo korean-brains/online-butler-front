@@ -1,4 +1,4 @@
-import Post from "../../types/Post";
+import { Post } from "../../types/Post";
 import butlerApi from "../axiosInstance";
 
 const getPost = async () => {

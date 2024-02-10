@@ -1,4 +1,4 @@
-import PostType from "../../types/Post";
+import { Post as PostType } from "../../types/Post";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import MediaContent from "./MediaContent";
@@ -9,14 +9,33 @@ import {
 } from "@fortawesome/free-regular-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
+import timeForToday from "../../utils/timeForToday";
+import { Link } from "react-router-dom";
+import { useState } from "react";
+import { SHARE_HOST } from "../../constants/share";
 
 interface PostProps {
   post: PostType;
 }
 
 const Post = ({ post }: PostProps) => {
+  const [showMore, setShowMore] = useState<boolean>(false);
+
+  const handleShare = () => {
+    if (!navigator.canShare) {
+      alert("공유하기 기능을 사용할 수 없습니다.");
+      return;
+    }
+    navigator.share({
+      title: "온라인 집사",
+      text: post.description,
+      url: `${SHARE_HOST}/post/${post.id}`,
+    });
+  };
+
   return (
-    <section className="flex flex-col pt-5">
+    <article className="flex flex-col pt-5">
+      {/* 게시글 Header */}
       <div className="flex items-center px-4">
         <img
           className="aspect-square h-10 rounded-full object-cover"
@@ -26,44 +45,71 @@ const Post = ({ post }: PostProps) => {
         <div className="ms-2 flex flex-col">
           <span>{post.member.nickname}</span>
           <span className="text-sm text-gray-500">
-            {post.post.published.toLocaleString("ko-KR", { timeZone: "UTC" })}
+            {timeForToday(post.createdAt)}
           </span>
         </div>
         <button className="ms-auto rounded-md bg-gray-200 px-3 py-1 text-sm font-semibold">
           {post.member.followed ? "팔로잉" : "팔로우"}
         </button>
       </div>
-      <p className="mt-3 px-4">{post.post.description}</p>
+
+      <div className="px-4">
+        {/* 게시글 내용 */}
+        <p
+          className={`mt-3 text-sm ${showMore ? "" : "line-clamp-2 text-clip"}`}
+        >
+          {post.description}
+        </p>
+
+        {/* 태그 */}
+        {showMore && (
+          <div className="mt-3 flex flex-wrap">
+            {post.tags.map((tag) => (
+              <Link to={`/search?keyword=#${tag.name}`}>
+                <span key={tag.id} className="text-link me-1 text-sm">
+                  {`#${tag.name}`}
+                </span>
+              </Link>
+            ))}
+          </div>
+        )}
+
+        {/* 더보기 */}
+        {!showMore && (
+          <button onClick={() => setShowMore(true)} className="text-gray-500">
+            더 보기
+          </button>
+        )}
+      </div>
+      {/* 이미지 슬라이드 */}
       <div className="mt-2">
         <Swiper resistance={true}>
-          {post.post.media.map((media, i, self) => (
+          {post.images.map((image, i, self) => (
             <SwiperSlide key={i} className="relative">
-              <MediaContent
-                img={media.src}
-                current={i + 1}
-                total={self.length}
-              />
+              <MediaContent img={image} current={i + 1} total={self.length} />
             </SwiperSlide>
           ))}
         </Swiper>
       </div>
+
+      {/* 아이콘 */}
       <div className="my-2 flex items-center px-4">
         <button>
           <FontAwesomeIcon icon={faHeart} size="lg" />
         </button>
-        <span className="ms-4">{post.post.likeNum}</span>
+        <span className="ms-4">{post.likeNum}</span>
         <button className="ms-8">
           <FontAwesomeIcon icon={faComment} size="lg" />
         </button>
-        <span className="ms-4">{post.post.commentNum}</span>
-        <button className="ms-8">
+        <span className="ms-4">{post.commentNum}</span>
+        <button className="ms-8" onClick={handleShare}>
           <FontAwesomeIcon icon={faShareFromSquare} size="lg" />
         </button>
         <button className="ms-auto">
           <FontAwesomeIcon icon={faHandHoldingDollar} size="lg" />
         </button>
       </div>
-    </section>
+    </article>
   );
 };
 

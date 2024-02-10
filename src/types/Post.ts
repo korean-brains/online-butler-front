@@ -1,20 +1,22 @@
 import { Member } from "./Member";
 
-export default interface Post {
+export interface Post {
+  id: number;
+  createdAt: string;
+  description: string;
+  images: string[];
+  likeNum: number;
+  commentNum: number;
   member: Member;
-  post: {
-    published: Date;
-    description: string;
-    media: {
-      type: string;
-      src: string;
-    }[];
-    likeNum: number;
-    commentNum: number;
-  };
+  tags: Tag[];
 }
 
 export interface MemberPostItem {
   id: number;
   thumbnail: string;
+}
+
+export interface Tag {
+  id: number;
+  name: string;
 }
