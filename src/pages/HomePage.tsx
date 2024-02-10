@@ -6,11 +6,6 @@ const HomePage = () => {
     <>
       <Header onClick={() => {}} />
       <PostList />
-      {/* <div className="overflow-hidden">
-        {posts.map((post, i) => (
-          <Post key={i} post={post} />
-        ))}
-      </div> */}
     </>
   );
 };

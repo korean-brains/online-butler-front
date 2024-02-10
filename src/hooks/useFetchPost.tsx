@@ -7,16 +7,6 @@ const useFetchPost = (id: number) => {
     const response = await butlerApi.get<Post>(`/post/${id}`);
     return response.data;
   });
-  // return useInfiniteQuery(
-  //   ["Posts"],
-  //   ({ pageParam = 0 }: QueryFunctionContext) =>
-  //     butlerApi.get<ScrollResponse<Post>>("/post", {
-  //       params: { page: pageParam, size: 10 },
-  //     }),
-  //   {
-  //     getNextPageParam: (current: any, all: any) => current,
-  //   },
-  // );
 };
 
 export default useFetchPost;
