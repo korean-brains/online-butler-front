@@ -1,36 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HeaderBack from "../components/header/HeaderBack";
-import { PostWriteRequest } from "../types/Post";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquarePlus } from "@fortawesome/free-regular-svg-icons";
+import useWritePost from "../hooks/useWritePost";
+import useInputImage from "../hooks/useInputImage";
 
 const PostWritePage = () => {
-  const [param, setParam] = useState<PostWriteRequest>({
-    caption: "",
-    tags: [],
-    images: [],
-  });
+  const { param, setParam, submit } = useWritePost();
+  const { previewImages, images, onChangeImage } = useInputImage();
   const [tag, setTag] = useState<string>("");
-  const [previewImage, setPreviewImage] = useState<any[]>([]);
 
-  const onChangeImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files !== null) {
-      const images = Array.from(event.target.files);
-      setParam((param) => ({
-        ...param,
-        images: [...param.images, ...images],
-      }));
-
-      images.forEach((image) => {
-        const fileReader = new FileReader();
-        fileReader.onload = () => {
-          setPreviewImage((prev) => [...prev, fileReader.result]);
-        };
-        fileReader.readAsDataURL(image);
-      });
-    }
-  };
+  useEffect(() => {
+    setParam({
+      ...param,
+      images: [...images],
+    });
+  }, [images]);
 
   const onChangeCaption = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setParam((param) => ({
@@ -67,13 +53,16 @@ const PostWritePage = () => {
   return (
     <>
       <HeaderBack title="포스팅">
-        <button className="btn-primary px-6">완료</button>
+        <button className="btn-primary px-6" onClick={submit}>
+          완료
+        </button>
       </HeaderBack>
       <div className="mt-8 flex w-full flex-col gap-5 px-5 pb-8">
         <div>
           <div className="flex snap-x snap-mandatory items-center gap-2 overflow-x-scroll md:scrollbar-hide">
-            {previewImage.map((preview) => (
+            {previewImages.map((preview, i) => (
               <img
+                key={i}
                 src={preview}
                 alt="preview"
                 className="aspect-square w-[80%] snap-center snap-always rounded-lg object-cover"

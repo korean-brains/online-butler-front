@@ -4,3 +4,4 @@ import "./login";
 import "./getMemberIntroduce";
 import "./getMemberPosts";
 import "./signup";
+import "./writePost";
