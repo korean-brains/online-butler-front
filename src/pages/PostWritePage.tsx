@@ -59,7 +59,7 @@ const PostWritePage = () => {
       </HeaderBack>
       <div className="mt-8 flex w-full flex-col gap-5 px-5 pb-8">
         <div>
-          <div className="flex snap-x snap-mandatory items-center gap-2 overflow-x-scroll md:scrollbar-hide">
+          <div className="flex snap-x snap-mandatory items-center gap-2 overflow-x-scroll">
             {previewImages.map((preview, i) => (
               <img
                 key={i}

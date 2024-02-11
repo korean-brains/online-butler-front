@@ -12,6 +12,8 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import SignupPage from "./pages/SignupPage";
 import PostWritePage from "./pages/PostWritePage";
 import PostUpdatePage from "./pages/PostUpdatePage";
+import DonationPage from "./pages/DonationPage";
+import RootPageNoBottomNavigation from "./pages/RootPageNoBottomNavigation";
 
 const queryClient = new QueryClient();
 
@@ -39,20 +41,30 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "/login",
-    element: <LoginPage />,
-  },
-  {
-    path: "/signup",
-    element: <SignupPage />,
-  },
-  {
-    path: "/post/write",
-    element: <PostWritePage />,
-  },
-  {
-    path: "/post/:id/update",
-    element: <PostUpdatePage />,
+    path: "/",
+    element: <RootPageNoBottomNavigation />,
+    children: [
+      {
+        path: "/login",
+        element: <LoginPage />,
+      },
+      {
+        path: "/signup",
+        element: <SignupPage />,
+      },
+      {
+        path: "/post/write",
+        element: <PostWritePage />,
+      },
+      {
+        path: "/post/:id/update",
+        element: <PostUpdatePage />,
+      },
+      {
+        path: "/donation/:id",
+        element: <DonationPage />,
+      },
+    ],
   },
   {
     path: "/test",
