@@ -26,3 +26,8 @@ export interface PostWriteRequest {
   caption: string;
   tags: string[];
 }
+
+export interface PostUpdateRequest {
+  caption: string;
+  tags: string[];
+}
