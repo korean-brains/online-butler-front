@@ -4,7 +4,7 @@ import PostList from "../components/post/PostList";
 const HomePage = () => {
   return (
     <>
-      <Header onClick={() => {}} />
+      <Header />
       <PostList />
     </>
   );

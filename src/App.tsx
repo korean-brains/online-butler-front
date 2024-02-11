@@ -10,6 +10,7 @@ import PostPage from "./pages/PostPage";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import SignupPage from "./pages/SignupPage";
+import PostWritePage from "./pages/PostWritePage";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignupPage />,
+  },
+  {
+    path: "/post/write",
+    element: <PostWritePage />,
   },
   {
     path: "/test",

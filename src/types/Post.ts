@@ -20,3 +20,9 @@ export interface Tag {
   id: number;
   name: string;
 }
+
+export interface PostWriteRequest {
+  images: File[];
+  caption: string;
+  tags: string[];
+}
