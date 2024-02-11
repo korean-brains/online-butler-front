@@ -12,11 +12,11 @@ const PostWritePage = () => {
   const [tag, setTag] = useState<string>("");
 
   useEffect(() => {
-    setParam({
-      ...param,
+    setParam((prev) => ({
+      ...prev,
       images: [...images],
-    });
-  }, [images]);
+    }));
+  }, [images, setParam]);
 
   const onChangeCaption = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setParam((param) => ({
@@ -111,8 +111,8 @@ const PostWritePage = () => {
           />
         </div>
         <div className="flex flex-wrap gap-2">
-          {param?.tags?.map((tag) => (
-            <span className="rounded-full bg-indigo-100 px-3 py-1">
+          {param.tags.map((tag, i) => (
+            <span key={i} className="rounded-full bg-indigo-100 px-3 py-1">
               {tag}
               <button className="ms-2" onClick={() => onClickDeleteTag(tag)}>
                 <FontAwesomeIcon icon={faXmark} />

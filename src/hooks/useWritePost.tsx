@@ -10,9 +10,22 @@ const useWritePost = () => {
   });
 
   const submit = async () => {
-    await butlerApi.post("/post", {
-      param,
+    const formData = new FormData();
+    formData.append(
+      "post",
+      new Blob([JSON.stringify({ caption: param.caption, tags: param.tags })], {
+        type: "application/json",
+      }),
+    );
+    param.images.forEach((image) => formData.append("images", image));
+
+    const response = await butlerApi.post("/post", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     });
+
+    return response.data;
   };
 
   return { param, setParam, submit };
