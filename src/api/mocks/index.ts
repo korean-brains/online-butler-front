@@ -6,3 +6,4 @@ import "./getMemberPosts";
 import "./signup";
 import "./writePost";
 import "./updatePost";
+import "./donation";
