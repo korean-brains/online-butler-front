@@ -3,3 +3,9 @@ export interface DonationRequest {
   amount: number;
   message: string;
 }
+
+export interface DonationRanking {
+  rank: number;
+  nickname: string;
+  amount: number;
+}

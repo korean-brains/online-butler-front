@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import DonationList from "../components/donation/DonationList";
 import HeaderBack from "../components/header/HeaderBack";
 import RankingList from "../components/donation/RankingList";
+import { AuthenticationContext } from "../contexts/AuthenticationContext";
+import { useNavigate } from "react-router-dom";
 
 const DonationListPage = () => {
+  const navigate = useNavigate();
   const [tab, setTab] = useState<string>("sent");
+  const { authentication } = useContext(AuthenticationContext);
+
+  useEffect(() => {
+    if (!authentication) {
+      navigate("/login", { replace: true });
+    }
+  }, [authentication, navigate]);
 
   return (
     <>

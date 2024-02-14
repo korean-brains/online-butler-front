@@ -7,3 +7,4 @@ import "./signup";
 import "./writePost";
 import "./updatePost";
 import "./donation";
+import "./getDonationRanking";
