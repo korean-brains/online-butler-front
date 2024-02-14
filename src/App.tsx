@@ -14,6 +14,7 @@ import PostWritePage from "./pages/PostWritePage";
 import PostUpdatePage from "./pages/PostUpdatePage";
 import DonationPage from "./pages/DonationPage";
 import RootPageNoBottomNavigation from "./pages/RootPageNoBottomNavigation";
+import DonationListPage from "./pages/DonationListPage";
 
 const queryClient = new QueryClient();
 
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: "/post/:id/update",
         element: <PostUpdatePage />,
+      },
+      {
+        path: "/donation",
+        element: <DonationListPage />,
       },
       {
         path: "/donation/:id",
