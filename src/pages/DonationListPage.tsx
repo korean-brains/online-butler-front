@@ -39,9 +39,9 @@ const DonationListPage = () => {
           후원 받은 내역
         </button>
       </div>
-      {tab === "sent" && <DonationList />}
+      {tab === "sent" && <DonationList type="sent" />}
       {tab === "ranking" && <RankingList />}
-      {tab === "received" && <DonationList />}
+      {tab === "received" && <DonationList type="received" />}
     </>
   );
 };
