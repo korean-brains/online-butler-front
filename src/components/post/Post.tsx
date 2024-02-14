@@ -10,7 +10,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
 import timeForToday from "../../utils/timeForToday";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { SHARE_HOST } from "../../constants/share";
 
@@ -20,6 +20,7 @@ interface PostProps {
 
 const Post = ({ post }: PostProps) => {
   const [showMore, setShowMore] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const handleShare = () => {
     if (!navigator.canShare) {
@@ -31,6 +32,10 @@ const Post = ({ post }: PostProps) => {
       text: post.description,
       url: `${SHARE_HOST}/post/${post.id}`,
     });
+  };
+
+  const handleDonation = () => {
+    navigate(`/donation/${post.id}`);
   };
 
   return (
@@ -66,7 +71,7 @@ const Post = ({ post }: PostProps) => {
           <div className="mt-3 flex flex-wrap">
             {post.tags.map((tag) => (
               <Link to={`/search?keyword=#${tag.name}`}>
-                <span key={tag.id} className="text-link me-1 text-sm">
+                <span key={tag.id} className="me-1 text-sm text-link">
                   {`#${tag.name}`}
                 </span>
               </Link>
@@ -105,7 +110,7 @@ const Post = ({ post }: PostProps) => {
         <button className="ms-8" onClick={handleShare}>
           <FontAwesomeIcon icon={faShareFromSquare} size="lg" />
         </button>
-        <button className="ms-auto">
+        <button className="ms-auto" onClick={handleDonation}>
           <FontAwesomeIcon icon={faHandHoldingDollar} size="lg" />
         </button>
       </div>

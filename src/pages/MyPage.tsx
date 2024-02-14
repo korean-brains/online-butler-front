@@ -31,7 +31,7 @@ const MyPage = () => {
 
   useEffect(() => {
     if (!authentication) {
-      navigate("/login");
+      navigate("/login", { replace: true });
     }
   }, [authentication, navigate]);
 

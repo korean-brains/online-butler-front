@@ -14,7 +14,7 @@ const LoginPage = () => {
     try {
       const authentication = await login(username, password);
       setAuthentication(authentication);
-      navigate("/");
+      navigate("/", { replace: true });
     } catch (error) {
       alert("로그인 실패");
     }
