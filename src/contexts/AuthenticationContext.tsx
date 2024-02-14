@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import {
   Authentication,
   AuthenticationContextType,
@@ -16,8 +16,14 @@ export const AuthenticationProvider = ({
   children,
 }: AuthenticationProviderProps) => {
   const [authentication, setAuthentication] = useState<Authentication | null>(
-    null,
+    sessionStorage.getItem("authentication")
+      ? JSON.parse(sessionStorage.getItem("authentication")!)
+      : null,
   );
+
+  useEffect(() => {
+    sessionStorage.setItem("authentication", JSON.stringify(authentication));
+  }, [authentication]);
 
   return (
     <AuthenticationContext.Provider
