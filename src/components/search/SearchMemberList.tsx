@@ -1,25 +1,34 @@
-import { MemberSearchResponse } from '../../types/Member';
-import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import useFetchMembers from '../../hooks/useFetchMembers';
+import useIntersect from '../../hooks/useIntersect';
+import { useMemo } from 'react';
+import SearchMemberListItem from './SearchMemberListItem';
 
-interface SearchMemberListProps {
-  member: MemberSearchResponse;
-}
+const SearchMemberList = () => {
+  const params = useParams();
+  const { data, isFetching, hasNextPage, fetchNextPage } = useFetchMembers(
+    params.query!,
+  );
 
-const SearchMemberList = ({ member }: SearchMemberListProps) => {
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    if (hasNextPage && !isFetching) {
+      fetchNextPage();
+    }
+  });
+
+  const items = useMemo(
+    () => (data ? data.pages.flatMap(({ data }) => data.contents) : []),
+    [data],
+  );
+
   return (
-    <Link to={`/member/${member.id}`}>
-      <div className="my-4 flex h-12 px-5">
-        <img
-          src={member.profile}
-          alt="profile"
-          className="aspect-square h-full rounded-full object-cover"
-        />
-        <div className="ms-3 flex flex-col">
-          <span>{member.nickname}</span>
-          <p className="text-sm text-gray-400">{member.introduce}</p>
-        </div>
-      </div>
-    </Link>
+    <div>
+      {items.map((item) => (
+        <SearchMemberListItem key={item.id} member={item} />
+      ))}
+      <div className="h-3" ref={ref}></div>
+    </div>
   );
 };
 

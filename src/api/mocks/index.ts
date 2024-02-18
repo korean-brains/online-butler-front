@@ -10,3 +10,4 @@ import './donation';
 import './getDonationRanking';
 import './getDonationList';
 import './member';
+import './tag';

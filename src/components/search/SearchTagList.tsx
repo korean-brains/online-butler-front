@@ -1,12 +1,12 @@
 import { useParams } from 'react-router-dom';
-import useFetchMembers from '../../hooks/useFetchMembers';
 import useIntersect from '../../hooks/useIntersect';
 import { useMemo } from 'react';
-import SearchMemberList from './SearchMemberList';
+import useFetchTags from '../../hooks/useFetchTags';
+import SearchTagListItem from './SearchTagListItem';
 
-const SearchList = () => {
+const SearchTagList = () => {
   const params = useParams();
-  const { data, isFetching, hasNextPage, fetchNextPage } = useFetchMembers(
+  const { data, isFetching, hasNextPage, fetchNextPage } = useFetchTags(
     params.query!,
   );
 
@@ -25,11 +25,11 @@ const SearchList = () => {
   return (
     <div>
       {items.map((item) => (
-        <SearchMemberList member={item} />
+        <SearchTagListItem key={item.id} tag={item} />
       ))}
-      <div className="h-3" ref={ref}></div>
+      <div className="h-3" ref={ref} />
     </div>
   );
 };
 
-export default SearchList;
+export default SearchTagList;

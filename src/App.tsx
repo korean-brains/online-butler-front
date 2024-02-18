@@ -16,7 +16,8 @@ import DonationPage from './pages/DonationPage';
 import RootPageNoBottomNavigation from './pages/RootPageNoBottomNavigation';
 import DonationListPage from './pages/DonationListPage';
 import SearchPage from './pages/SearchPage';
-import SearchList from './components/search/SearchList';
+import SearchMemberList from './components/search/SearchMemberList';
+import SearchTagList from './components/search/SearchTagList';
 
 const queryClient = new QueryClient();
 
@@ -34,8 +35,12 @@ const router = createBrowserRouter([
         element: <SearchPage />,
         children: [
           {
-            path: '/search/:query',
-            element: <SearchList />,
+            path: '/search/member/:query',
+            element: <SearchMemberList />,
+          },
+          {
+            path: '/search/tag/:query',
+            element: <SearchTagList />,
           },
         ],
       },
