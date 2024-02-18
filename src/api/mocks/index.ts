@@ -9,3 +9,4 @@ import "./updatePost";
 import "./donation";
 import "./getDonationRanking";
 import "./getDonationList";
+import "./member";
