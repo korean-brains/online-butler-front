@@ -11,3 +11,10 @@ export interface MemberIntroduce extends Member {
   folloingNum: number;
   introduce: string;
 }
+
+export interface MemberSearchResponse {
+  id: number;
+  profile: string;
+  nickname: string;
+  introduce: string;
+}

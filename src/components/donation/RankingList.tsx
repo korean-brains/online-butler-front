@@ -1,7 +1,7 @@
-import { useContext, useMemo } from "react";
-import useFetchDonationRanking from "../../hooks/useFetchDonationRanking";
-import useIntersect from "../../hooks/useIntersect";
-import { AuthenticationContext } from "../../contexts/AuthenticationContext";
+import { useContext, useMemo } from 'react';
+import useFetchDonationRanking from '../../hooks/useFetchDonationRanking';
+import useIntersect from '../../hooks/useIntersect';
+import { AuthenticationContext } from '../../contexts/AuthenticationContext';
 
 const RankingList = () => {
   const { authentication } = useContext(AuthenticationContext);

@@ -1,17 +1,17 @@
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import HeaderBack from "../components/header/HeaderBack";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useParams } from "react-router-dom";
-import useFetchPost from "../hooks/useFetchPost";
-import useUpdatePost from "../hooks/useUpdatePost";
-import { useEffect, useState } from "react";
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import HeaderBack from '../components/header/HeaderBack';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useParams } from 'react-router-dom';
+import useFetchPost from '../hooks/useFetchPost';
+import useUpdatePost from '../hooks/useUpdatePost';
+import { useEffect, useState } from 'react';
 
 const PostUpdatePage = () => {
   const { id } = useParams();
   const { isLoading, data: post } = useFetchPost(parseInt(id!));
   const { param, setParam, onChangeCaption, deleteTag, submit } =
     useUpdatePost();
-  const [tag, setTag] = useState<string>("");
+  const [tag, setTag] = useState<string>('');
 
   useEffect(() => {
     if (!isLoading && post) {
@@ -29,14 +29,14 @@ const PostUpdatePage = () => {
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (
       tag.length !== 0 &&
-      event.key === "Enter" &&
+      event.key === 'Enter' &&
       !param.tags.includes(tag)
     ) {
       setParam((param) => ({
         ...param,
         tags: [...param.tags, tag],
       }));
-      setTag("");
+      setTag('');
     }
   };
 

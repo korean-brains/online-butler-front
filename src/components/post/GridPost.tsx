@@ -1,32 +1,32 @@
-import { useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import useFetchMemberPosts from "../../hooks/useFetchMemberPosts";
-import useIntersect from "../../hooks/useIntersect";
+import { useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
+import useFetchMemberPosts from '../../hooks/useFetchMemberPosts';
+import useIntersect from '../../hooks/useIntersect';
 
 interface GridPostProps {
   id: number;
 }
 
 const GridPost = ({ id }: GridPostProps) => {
-  const [tab, setTab] = useState<string>("write");
+  const [tab, setTab] = useState<string>('write');
   const handleWriteTab = () => {
-    setTab("write");
+    setTab('write');
   };
   const handleLikeTab = () => {
-    setTab("like");
+    setTab('like');
   };
 
   return (
     <div>
       <div className="sticky top-0 z-10 flex h-10 bg-white">
         <button
-          className={`flex-grow ${tab === "write" ? "border-b-2 border-gray-950" : ""}`}
+          className={`flex-grow ${tab === 'write' ? 'border-b-2 border-gray-950' : ''}`}
           onClick={handleWriteTab}
         >
           작성글
         </button>
         <button
-          className={`flex-grow ${tab === "like" ? "border-b-2 border-gray-950" : ""}`}
+          className={`flex-grow ${tab === 'like' ? 'border-b-2 border-gray-950' : ''}`}
           onClick={handleLikeTab}
         >
           좋아요한 글

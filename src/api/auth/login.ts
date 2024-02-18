@@ -1,8 +1,8 @@
-import { Authentication } from "../../types/Authentication";
-import butlerApi from "../axiosInstance";
+import { Authentication } from '../../types/Authentication';
+import butlerApi from '../axiosInstance';
 
 const login = async (username: string, password: string) => {
-  const { data } = await butlerApi.post<Authentication>("/login", {
+  const { data } = await butlerApi.post<Authentication>('/login', {
     username,
     password,
   });

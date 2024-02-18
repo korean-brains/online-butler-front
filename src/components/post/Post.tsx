@@ -1,18 +1,18 @@
-import { Post as PostType } from "../../types/Post";
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import MediaContent from "./MediaContent";
+import { Post as PostType } from '../../types/Post';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
+import MediaContent from './MediaContent';
 import {
   faComment,
   faHeart,
   faShareFromSquare,
-} from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHandHoldingDollar } from "@fortawesome/free-solid-svg-icons";
-import timeForToday from "../../utils/timeForToday";
-import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { SHARE_HOST } from "../../constants/share";
+} from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHandHoldingDollar } from '@fortawesome/free-solid-svg-icons';
+import timeForToday from '../../utils/timeForToday';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { SHARE_HOST } from '../../constants/share';
 
 interface PostProps {
   post: PostType;
@@ -24,11 +24,11 @@ const Post = ({ post }: PostProps) => {
 
   const handleShare = () => {
     if (!navigator.canShare) {
-      alert("공유하기 기능을 사용할 수 없습니다.");
+      alert('공유하기 기능을 사용할 수 없습니다.');
       return;
     }
     navigator.share({
-      title: "온라인 집사",
+      title: '온라인 집사',
       text: post.description,
       url: `${SHARE_HOST}/post/${post.id}`,
     });
@@ -44,7 +44,7 @@ const Post = ({ post }: PostProps) => {
       <div className="flex items-center px-4">
         <img
           className="aspect-square h-10 rounded-full object-cover"
-          src={post.member.profile || "/images/profile.jpg"}
+          src={post.member.profile || '/images/profile.jpg'}
           alt="profile"
         />
         <div className="ms-2 flex flex-col">
@@ -54,14 +54,14 @@ const Post = ({ post }: PostProps) => {
           </span>
         </div>
         <button className="ms-auto rounded-md bg-gray-200 px-3 py-1 text-sm font-semibold">
-          {post.member.followed ? "팔로잉" : "팔로우"}
+          {post.member.followed ? '팔로잉' : '팔로우'}
         </button>
       </div>
 
       <div className="px-4">
         {/* 게시글 내용 */}
         <p
-          className={`mt-3 text-sm ${showMore ? "" : "line-clamp-2 text-clip"}`}
+          className={`mt-3 text-sm ${showMore ? '' : 'line-clamp-2 text-clip'}`}
         >
           {post.description}
         </p>

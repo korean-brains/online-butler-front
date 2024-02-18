@@ -1,4 +1,4 @@
-import { MemberIntroduce as MemberIntroduceType } from "../../types/Member";
+import { MemberIntroduce as MemberIntroduceType } from '../../types/Member';
 
 interface MemberIntroduceProps {
   memberIntroduce: MemberIntroduceType;
@@ -9,7 +9,7 @@ const MemberIntroduce = ({ memberIntroduce }: MemberIntroduceProps) => {
     <div className="mt-5 border-b-8 border-gray-200 px-5">
       <div className="flex items-center">
         <img
-          src={memberIntroduce.profile || "/images/profile.jpg"}
+          src={memberIntroduce.profile || '/images/profile.jpg'}
           alt="profile"
           className="aspect-square h-16 rounded-full object-cover"
         />

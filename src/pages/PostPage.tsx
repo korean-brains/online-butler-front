@@ -1,7 +1,7 @@
-import { useParams } from "react-router";
-import HeaderBack from "../components/header/HeaderBack";
-import Post from "../components/post/Post";
-import useFetchPost from "../hooks/useFetchPost";
+import { useParams } from 'react-router';
+import HeaderBack from '../components/header/HeaderBack';
+import Post from '../components/post/Post';
+import useFetchPost from '../hooks/useFetchPost';
 
 const PostPage = () => {
   const { id } = useParams();
