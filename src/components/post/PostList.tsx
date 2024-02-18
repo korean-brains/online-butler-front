@@ -1,7 +1,7 @@
-import { useMemo } from "react";
-import useFetchPosts from "../../hooks/useFetchPosts";
-import useIntersect from "../../hooks/useIntersect";
-import Post from "./Post";
+import { useMemo } from 'react';
+import useFetchPosts from '../../hooks/useFetchPosts';
+import useIntersect from '../../hooks/useIntersect';
+import Post from './Post';
 
 const PostList = () => {
   const { data, hasNextPage, isFetching, fetchNextPage } = useFetchPosts();

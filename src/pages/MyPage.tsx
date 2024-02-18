@@ -1,19 +1,19 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthenticationContext } from "../contexts/AuthenticationContext";
-import { AuthenticationContextType } from "../types/Authentication";
-import { Link, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useContext, useEffect, useState } from 'react';
+import { AuthenticationContext } from '../contexts/AuthenticationContext';
+import { AuthenticationContextType } from '../types/Authentication';
+import { Link, useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEllipsis,
   faGear,
   faHandHoldingDollar,
   faReceipt,
-} from "@fortawesome/free-solid-svg-icons";
-import MemberIntroduce from "../components/member/MemberIntroduce";
-import getMemberIntroduce from "../api/member/getMemberIntroduce";
-import { MemberIntroduce as MemberIntroduceType } from "../types/Member";
-import GridPost from "../components/post/GridPost";
-import Modal from "../components/modal/Modal";
+} from '@fortawesome/free-solid-svg-icons';
+import MemberIntroduce from '../components/member/MemberIntroduce';
+import getMemberIntroduce from '../api/member/getMemberIntroduce';
+import { MemberIntroduce as MemberIntroduceType } from '../types/Member';
+import GridPost from '../components/post/GridPost';
+import Modal from '../components/modal/Modal';
 
 const MyPage = () => {
   const navigate = useNavigate();
@@ -31,7 +31,7 @@ const MyPage = () => {
 
   useEffect(() => {
     if (!authentication) {
-      navigate("/login", { replace: true });
+      navigate('/login', { replace: true });
     }
   }, [authentication, navigate]);
 
@@ -58,18 +58,18 @@ const MyPage = () => {
       {isModalOpen && (
         <Modal closeModal={() => setIsModalOpen(false)}>
           <div className="flex min-w-[300px] flex-col gap-5">
-            <Link to={"/profile"}>
+            <Link to={'/profile'}>
               <FontAwesomeIcon icon={faGear} className="w-[24px]" />
               <span className="ms-3">프로필 설정</span>
             </Link>
-            <Link to={"/donation"}>
+            <Link to={'/donation'}>
               <FontAwesomeIcon
                 icon={faHandHoldingDollar}
                 className="w-[24px]"
               />
               <span className="ms-3">후원 내역</span>
             </Link>
-            <Link to={"/adjustment"}>
+            <Link to={'/adjustment'}>
               <FontAwesomeIcon icon={faReceipt} className="w-[24px]" />
               <span className="ms-3">정산하기</span>
             </Link>

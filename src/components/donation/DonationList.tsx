@@ -1,14 +1,14 @@
-import { faCalendar } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import DatePicker from "react-datepicker";
-import { ko } from "date-fns/locale";
-import "react-datepicker/dist/react-datepicker.css";
-import useFetchDonationList from "../../hooks/useFetchDonationList";
-import { useContext, useMemo, useState } from "react";
-import { AuthenticationContext } from "../../contexts/AuthenticationContext";
-import useIntersect from "../../hooks/useIntersect";
-import dateFormat from "../../utils/dateFormat";
-import { DonationListRequest } from "../../types/Donation";
+import { faCalendar } from '@fortawesome/free-regular-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import DatePicker from 'react-datepicker';
+import { ko } from 'date-fns/locale';
+import 'react-datepicker/dist/react-datepicker.css';
+import useFetchDonationList from '../../hooks/useFetchDonationList';
+import { useContext, useMemo, useState } from 'react';
+import { AuthenticationContext } from '../../contexts/AuthenticationContext';
+import useIntersect from '../../hooks/useIntersect';
+import dateFormat from '../../utils/dateFormat';
+import { DonationListRequest } from '../../types/Donation';
 
 interface DonationListProps {
   type: string;
@@ -93,9 +93,9 @@ const DonationList = ({ type }: DonationListProps) => {
             <tr className="border-b border-slate-200 odd:bg-white even:bg-slate-50">
               <td className="px-6 py-3">
                 <div className="flex flex-col">
-                  <span>{dateFormat(item.createdAt, "YYYY-MM-DD")}</span>
+                  <span>{dateFormat(item.createdAt, 'YYYY-MM-DD')}</span>
                   <span className="text-sm text-gray-500">
-                    {dateFormat(item.createdAt, "HH:mm")}
+                    {dateFormat(item.createdAt, 'HH:mm')}
                   </span>
                 </div>
               </td>

@@ -1,11 +1,11 @@
-import { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import login from "../api/auth/login";
-import { AuthenticationContext } from "../contexts/AuthenticationContext";
+import { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import login from '../api/auth/login';
+import { AuthenticationContext } from '../contexts/AuthenticationContext';
 
 const LoginPage = () => {
-  const [username, setUsername] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const { setAuthentication } = useContext(AuthenticationContext);
   const navigate = useNavigate();
 
@@ -14,9 +14,9 @@ const LoginPage = () => {
     try {
       const authentication = await login(username, password);
       setAuthentication(authentication);
-      navigate("/", { replace: true });
+      navigate('/', { replace: true });
     } catch (error) {
-      alert("로그인 실패");
+      alert('로그인 실패');
     }
   };
 
@@ -56,7 +56,7 @@ const LoginPage = () => {
       </form>
 
       <p className="mt-7">
-        아직 회원이 아니신가요?{" "}
+        아직 회원이 아니신가요?{' '}
         <Link to="/signup" className="text-indigo-400">
           회원가입
         </Link>

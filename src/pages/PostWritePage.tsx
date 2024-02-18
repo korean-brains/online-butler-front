@@ -1,15 +1,15 @@
-import { useEffect, useState } from "react";
-import HeaderBack from "../components/header/HeaderBack";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSquarePlus } from "@fortawesome/free-regular-svg-icons";
-import useWritePost from "../hooks/useWritePost";
-import useInputImage from "../hooks/useInputImage";
+import { useEffect, useState } from 'react';
+import HeaderBack from '../components/header/HeaderBack';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
+import useWritePost from '../hooks/useWritePost';
+import useInputImage from '../hooks/useInputImage';
 
 const PostWritePage = () => {
   const { param, setParam, submit } = useWritePost();
   const { previewImages, images, onChangeImage } = useInputImage();
-  const [tag, setTag] = useState<string>("");
+  const [tag, setTag] = useState<string>('');
 
   useEffect(() => {
     setParam((prev) => ({
@@ -32,14 +32,14 @@ const PostWritePage = () => {
   const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (
       tag.length !== 0 &&
-      event.key === "Enter" &&
+      event.key === 'Enter' &&
       !param.tags.includes(tag)
     ) {
       setParam((param) => ({
         ...param,
         tags: [...param.tags, tag],
       }));
-      setTag("");
+      setTag('');
     }
   };
 

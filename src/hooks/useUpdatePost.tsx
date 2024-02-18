@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { PostUpdateRequest } from "../types/Post";
-import butlerApi from "../api/axiosInstance";
+import { useState } from 'react';
+import { PostUpdateRequest } from '../types/Post';
+import butlerApi from '../api/axiosInstance';
 
 const useUpdatePost = () => {
   const [param, setParam] = useState<PostUpdateRequest>({
-    caption: "",
+    caption: '',
     tags: [],
   });
 
@@ -23,7 +23,7 @@ const useUpdatePost = () => {
   };
 
   const submit = async () => {
-    await butlerApi.patch("/post", {
+    await butlerApi.patch('/post', {
       param,
     });
   };

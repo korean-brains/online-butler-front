@@ -1,10 +1,10 @@
-import { useState } from "react";
-import { PostWriteRequest } from "../types/Post";
-import butlerApi from "../api/axiosInstance";
+import { useState } from 'react';
+import { PostWriteRequest } from '../types/Post';
+import butlerApi from '../api/axiosInstance';
 
 const useWritePost = () => {
   const [param, setParam] = useState<PostWriteRequest>({
-    caption: "",
+    caption: '',
     tags: [],
     images: [],
   });
@@ -12,16 +12,16 @@ const useWritePost = () => {
   const submit = async () => {
     const formData = new FormData();
     formData.append(
-      "post",
+      'post',
       new Blob([JSON.stringify({ caption: param.caption, tags: param.tags })], {
-        type: "application/json",
+        type: 'application/json',
       }),
     );
-    param.images.forEach((image) => formData.append("images", image));
+    param.images.forEach((image) => formData.append('images', image));
 
-    const response = await butlerApi.post("/post", formData, {
+    const response = await butlerApi.post('/post', formData, {
       headers: {
-        "Content-Type": "multipart/form-data",
+        'Content-Type': 'multipart/form-data',
       },
     });
 

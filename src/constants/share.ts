@@ -1,1 +1,1 @@
-export const SHARE_HOST = "https://localhost:3000";
+export const SHARE_HOST = 'https://localhost:3000';

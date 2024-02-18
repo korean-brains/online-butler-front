@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from 'react';
 
 type IntersectHandler = (
   entry: IntersectionObserverEntry,
@@ -8,7 +8,7 @@ type IntersectHandler = (
 const defaultOption: IntersectionObserverInit = {
   root: null,
   threshold: 0.5,
-  rootMargin: "0px",
+  rootMargin: '0px',
 };
 
 const useIntersect = (

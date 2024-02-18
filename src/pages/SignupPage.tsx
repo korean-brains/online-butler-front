@@ -1,5 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
-import useSignup from "../hooks/useSignup";
+import { Link, useNavigate } from 'react-router-dom';
+import useSignup from '../hooks/useSignup';
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const SignupPage = () => {
     event.preventDefault();
     try {
       await submit();
-      navigate("/login");
+      navigate('/login');
     } catch (error) {
       if (error instanceof Error) {
         alert(error.message);
@@ -80,7 +80,7 @@ const SignupPage = () => {
       </form>
 
       <p className="mt-8">
-        이미 회원이신가요?{" "}
+        이미 회원이신가요?{' '}
         <Link to="/login" className="text-indigo-400">
           로그인
         </Link>

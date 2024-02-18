@@ -1,4 +1,4 @@
-import dayjs from "dayjs";
+import dayjs from 'dayjs';
 
 const dateFormat = (date: Date, format: string) => {
   const d = dayjs(date);

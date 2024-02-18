@@ -1,8 +1,8 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from 'react';
 import {
   Authentication,
   AuthenticationContextType,
-} from "../types/Authentication";
+} from '../types/Authentication';
 
 interface AuthenticationProviderProps {
   children: React.ReactNode;
@@ -16,13 +16,13 @@ export const AuthenticationProvider = ({
   children,
 }: AuthenticationProviderProps) => {
   const [authentication, setAuthentication] = useState<Authentication | null>(
-    sessionStorage.getItem("authentication")
-      ? JSON.parse(sessionStorage.getItem("authentication")!)
+    sessionStorage.getItem('authentication')
+      ? JSON.parse(sessionStorage.getItem('authentication')!)
       : null,
   );
 
   useEffect(() => {
-    sessionStorage.setItem("authentication", JSON.stringify(authentication));
+    sessionStorage.setItem('authentication', JSON.stringify(authentication));
   }, [authentication]);
 
   return (

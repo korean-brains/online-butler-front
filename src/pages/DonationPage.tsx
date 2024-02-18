@@ -1,10 +1,10 @@
-import { useNavigate, useParams } from "react-router-dom";
-import HeaderBack from "../components/header/HeaderBack";
-import useFetchPost from "../hooks/useFetchPost";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import useDonation from "../hooks/useDonation";
-import { useRef } from "react";
+import { useNavigate, useParams } from 'react-router-dom';
+import HeaderBack from '../components/header/HeaderBack';
+import useFetchPost from '../hooks/useFetchPost';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import useDonation from '../hooks/useDonation';
+import { useRef } from 'react';
 
 const DonationPage = () => {
   const { id } = useParams();
@@ -16,7 +16,7 @@ const DonationPage = () => {
   const handleChangeAmount = (event: React.ChangeEvent<HTMLInputElement>) => {
     setParam((prev) => ({
       ...prev,
-      amount: parseInt(event.target.value.replace(/[^0-9]/g, "")) || 0,
+      amount: parseInt(event.target.value.replace(/[^0-9]/g, '')) || 0,
     }));
   };
 
@@ -77,7 +77,7 @@ const DonationPage = () => {
               id="amount"
               name="amount"
               type="text"
-              value={param.amount.toLocaleString("ko-kR")}
+              value={param.amount.toLocaleString('ko-kR')}
               min={1000}
               onChange={handleChangeAmount}
               className="flex-grow text-right outline-none"

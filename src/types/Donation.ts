@@ -1,4 +1,4 @@
-import { ScrollRequest } from "./Scroll";
+import { ScrollRequest } from './Scroll';
 
 export interface DonationRequest {
   memberId: number;
