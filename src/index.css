@@ -21,7 +21,7 @@
   }
 
   .btn-primary {
-    @apply rounded-md bg-indigo-400 px-3 py-2 text-center text-white;
+    @apply rounded-md bg-indigo-400 px-3 py-2 text-center text-white font-semibold text-xs;
   }
 }
 
