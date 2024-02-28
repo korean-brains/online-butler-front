@@ -4,17 +4,17 @@ import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import useWritePost from '../hooks/useWritePost';
-import useInputImage from '../hooks/useInputImage';
+import useInputImages from '../hooks/useInputImages';
 
 const PostWritePage = () => {
   const { param, setParam, submit } = useWritePost();
-  const { previewImages, images, onChangeImage } = useInputImage();
+  const { previewImages, images, onChangeImage } = useInputImages();
   const [tag, setTag] = useState<string>('');
 
   useEffect(() => {
     setParam((prev) => ({
       ...prev,
-      images: [...images],
+      image: [...images],
     }));
   }, [images, setParam]);
 
