@@ -46,8 +46,9 @@ const DonationPage = () => {
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
     await submit();
-    navigate(-1);
+    // navigate(-1);
   };
 
   return (
