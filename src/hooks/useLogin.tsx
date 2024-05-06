@@ -2,6 +2,7 @@ import { useContext, useState } from 'react';
 import { LoginRequest, LoginResponse } from '../types/Auth';
 import butlerApi from '../api/axiosInstance';
 import { AuthenticationContext } from '../contexts/AuthenticationContext';
+import { MemberIntroduce } from '../types/Member';
 
 const useLogin = () => {
   const [loginParam, setLoginParam] = useState<LoginRequest>({
@@ -16,8 +17,15 @@ const useLogin = () => {
         '/api/login',
         loginParam,
       );
+
+      const id = (
+        await butlerApi.get<MemberIntroduce>(`/api/member/me`, {
+          headers: { Authorization: `Bearer ${response.data.accessToken}` },
+        })
+      ).data.id;
+
       setAuthentication({
-        id: 0,
+        id: id,
         accessToken: response.data.accessToken,
         refreshToken: response.data.refreshToken,
         isAuthenticated: true,
