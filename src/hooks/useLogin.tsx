@@ -12,13 +12,15 @@ const useLogin = () => {
 
   const submit = async () => {
     try {
-      const response = await butlerApi.post<LoginResponse>('/api/login', {
+      const response = await butlerApi.post<LoginResponse>(
+        '/api/login',
         loginParam,
-      });
+      );
       setAuthentication({
         id: 0,
         accessToken: response.data.accessToken,
         refreshToken: response.data.refreshToken,
+        isAuthenticated: true,
       });
     } catch (error) {
       alert('로그인 실패');

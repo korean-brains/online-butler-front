@@ -5,17 +5,15 @@ import butlerApi from '../api/axiosInstance';
 
 const useSignup = () => {
   const [signupParam, setSignupParam] = useState<SignupRequest>({
-    username: '',
+    email: '',
     password: '',
     passwordConfirm: '',
-    nickname: '',
+    name: '',
   });
 
   const submit = async () => {
     validateSignupParam(signupParam);
-    await butlerApi.post('/signup', {
-      signupParam,
-    });
+    await butlerApi.post('/api/signup', signupParam);
   };
 
   return { signupParam, setSignupParam, submit };
@@ -27,10 +25,10 @@ const validateSignupParam = (signupParam: SignupRequest) => {
   const passwordRegex =
     /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/;
 
-  if (signupParam.username.length < 5) {
+  if (signupParam.email.length < 5) {
     throw new FieldError('아이디는 5자 이상이어야 합니다.');
   }
-  if (signupParam.nickname.length === 0) {
+  if (signupParam.name.length === 0) {
     throw new FieldError('별명을 입력해주세요.');
   }
   if (!passwordRegex.test(signupParam.password)) {

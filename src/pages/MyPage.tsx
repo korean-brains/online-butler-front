@@ -30,7 +30,7 @@ const MyPage = () => {
   };
 
   useEffect(() => {
-    if (!authentication) {
+    if (!authentication.isAuthenticated) {
       navigate('/login', { replace: true });
     }
   }, [authentication, navigate]);

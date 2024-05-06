@@ -15,10 +15,15 @@ export const AuthenticationContext = createContext<AuthenticationContextType>(
 export const AuthenticationProvider = ({
   children,
 }: AuthenticationProviderProps) => {
-  const [authentication, setAuthentication] = useState<Authentication | null>(
+  const [authentication, setAuthentication] = useState<Authentication>(
     localStorage.getItem('authentication')
       ? JSON.parse(localStorage.getItem('authentication')!)
-      : null,
+      : {
+          isAuthenticated: false,
+          id: 0,
+          accessToken: '',
+          refreshToken: '',
+        },
   );
 
   useEffect(() => {
