@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { SignupRequest } from '../types/Signup';
+import { SignupRequest } from '../types/Auth';
 import { FieldError } from '../types/Error';
 import butlerApi from '../api/axiosInstance';
 

@@ -1,5 +1,7 @@
 export interface Authentication {
   id: number;
+  accessToken: string;
+  refreshToken: string;
 }
 
 export interface AuthenticationContextType {
