@@ -16,13 +16,13 @@ export const AuthenticationProvider = ({
   children,
 }: AuthenticationProviderProps) => {
   const [authentication, setAuthentication] = useState<Authentication | null>(
-    sessionStorage.getItem('authentication')
-      ? JSON.parse(sessionStorage.getItem('authentication')!)
+    localStorage.getItem('authentication')
+      ? JSON.parse(localStorage.getItem('authentication')!)
       : null,
   );
 
   useEffect(() => {
-    sessionStorage.setItem('authentication', JSON.stringify(authentication));
+    localStorage.setItem('authentication', JSON.stringify(authentication));
   }, [authentication]);
 
   return (
