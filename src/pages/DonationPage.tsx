@@ -46,9 +46,20 @@ const DonationPage = () => {
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    await submit();
-    // navigate(-1);
+    console.log(window.history.state);
+    try {
+      await submit();
+      alert('후원에 성공하였습니다.');
+      // navigate(-2);
+    } catch (e: any) {
+      alert(`결제 실패 : ${e.message}`);
+      if (!(e instanceof Error)) {
+        if (e.error_code !== 'RC_PRICE_LEAST_LT') {
+          // navigate(-1);
+        }
+      }
+    }
+    console.log(window.history.state);
   };
 
   return (

@@ -32,20 +32,23 @@ const useDonation = () => {
         },
       ],
       extra: {
-        // open_type: 'popup',
         open_type: 'iframe',
         card_quota: '0,2,3',
         escrow: false,
       },
     });
 
-    console.log(response);
-
-    const butlerApiResponse = await butlerApi.post('/donation/verify', {
-      receiptId: response.data.receipt_id,
-    });
-
-    console.log(butlerApiResponse);
+    switch (response.event) {
+      case 'issued': // 가상계좌 입금 완료 처리
+        break;
+      case 'done': // 결제 완료 처리
+        await butlerApi.post('/donation/verify', {
+          receiptId: response.data.receipt_id,
+        });
+        break;
+      case 'confirm': //payload.extra.separately_confirmed = true; 일 경우 승인 전 해당 이벤트가 호출됨
+        break;
+    }
   };
 
   return { param, setParam, submit };
