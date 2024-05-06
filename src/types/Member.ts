@@ -13,9 +13,9 @@ export interface Member {
 }
 
 export interface MemberIntroduce extends Member {
-  postNum: number;
-  followerNum: number;
-  folloingNum: number;
+  postCount: number;
+  followerCount: number;
+  followingCount: number;
   introduce: string;
 }
 

@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import { AuthenticationContext } from '../contexts/AuthenticationContext';
-import { AuthenticationContextType } from '../types/Authentication';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -10,19 +9,15 @@ import {
   faReceipt,
 } from '@fortawesome/free-solid-svg-icons';
 import MemberIntroduce from '../components/member/MemberIntroduce';
-import getMemberIntroduce from '../api/member/getMemberIntroduce';
-import { MemberIntroduce as MemberIntroduceType } from '../types/Member';
 import GridPost from '../components/post/GridPost';
 import Modal from '../components/modal/Modal';
+import useFetchMyPage from '../hooks/useFetchMyPage';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { authentication } = useContext<AuthenticationContextType>(
-    AuthenticationContext,
-  );
-  const [memberIntroduce, setMemberIntroduce] = useState<MemberIntroduceType>(
-    {} as MemberIntroduceType,
-  );
+  const { authentication } = useContext(AuthenticationContext);
+  const { data: memberIntroduce, isLoading } = useFetchMyPage();
+
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const onClick = () => {
@@ -35,15 +30,9 @@ const MyPage = () => {
     }
   }, [authentication, navigate]);
 
-  useEffect(() => {
-    if (!authentication) {
-      return;
-    }
-
-    getMemberIntroduce(authentication.id).then((memberIntroduce) =>
-      setMemberIntroduce(memberIntroduce),
-    );
-  }, [authentication]);
+  if (isLoading) {
+    return <>Loading...</>;
+  }
 
   return (
     <>
@@ -53,8 +42,8 @@ const MyPage = () => {
           <FontAwesomeIcon icon={faEllipsis} />
         </button>
       </div>
-      <MemberIntroduce memberIntroduce={memberIntroduce} />
-      <GridPost id={memberIntroduce.id} />
+      <MemberIntroduce memberIntroduce={memberIntroduce!} />
+      <GridPost id={memberIntroduce!.id} />
       {isModalOpen && (
         <Modal closeModal={() => setIsModalOpen(false)}>
           <div className="flex min-w-[300px] flex-col gap-5">

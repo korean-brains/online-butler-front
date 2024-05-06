@@ -16,17 +16,21 @@ const MemberIntroduce = ({ memberIntroduce }: MemberIntroduceProps) => {
 
         <div className="flex flex-grow items-center justify-around">
           <div className="flex flex-col items-center">
-            <span className="font-semibold">{memberIntroduce.postNum}</span>
+            <span className="font-semibold">{memberIntroduce.postCount}</span>
             <span className="text-sm">게시물</span>
           </div>
 
           <div className="flex flex-col items-center">
-            <span className="font-semibold">{memberIntroduce.followerNum}</span>
+            <span className="font-semibold">
+              {memberIntroduce.followerCount}
+            </span>
             <span className="text-sm">팔로워</span>
           </div>
 
           <div className="flex flex-col items-center">
-            <span className="font-semibold">{memberIntroduce.folloingNum}</span>
+            <span className="font-semibold">
+              {memberIntroduce.followingCount}
+            </span>
             <span className="text-sm">팔로잉</span>
           </div>
         </div>
