@@ -70,7 +70,7 @@ const Post = ({ post }: PostProps) => {
         {/* 태그 */}
         {showMore && (
           <div className="mt-3 flex flex-wrap">
-            {post.tags.map((idx, tag) => (
+            {post.tags.map((tag, idx) => (
               <Link to={`/search?keyword=#${tag}`}>
                 <span key={idx} className="me-1 text-sm text-link">
                   {`#${tag}`}
