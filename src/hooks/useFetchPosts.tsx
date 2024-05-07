@@ -6,12 +6,12 @@ import { ScrollRequest, ScrollResponse } from '../types/Scroll';
 const useFetchPosts = (scrollRequest: ScrollRequest) => {
   return useInfiniteQuery(
     ['Posts'],
-    ({ pageParam = 0 }: QueryFunctionContext) =>
+    ({ pageParam = null }: QueryFunctionContext) =>
       butlerApi.get<ScrollResponse<Post>>('/api/post', {
-        params: { page: pageParam, size: scrollRequest.size },
+        params: { cursor: pageParam, size: scrollRequest.size },
       }),
     {
-      getNextPageParam: (current: any, all: any) => current,
+      getNextPageParam: (current: any, all: any) => current.data.nextCursor,
     },
   );
 };

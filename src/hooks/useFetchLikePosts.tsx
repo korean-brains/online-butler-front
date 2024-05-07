@@ -11,7 +11,7 @@ const useFetchWrittenPosts = (id: number, scrollRequest: ScrollRequest) => {
         params: { cursor: pageParam, size: scrollRequest.size },
       }),
     {
-      getNextPageParam: (current: any, all: any) => current.nextCursor,
+      getNextPageParam: (current: any, all: any) => current.data.nextCursor,
     },
   );
 };
