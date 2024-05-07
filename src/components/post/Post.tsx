@@ -13,6 +13,7 @@ import timeForToday from '../../utils/timeForToday';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { SHARE_HOST } from '../../constants/share';
+import serverUrl from '../../utils/serverUrl';
 
 interface PostProps {
   post: PostType;
@@ -91,7 +92,11 @@ const Post = ({ post }: PostProps) => {
         <Swiper resistance={true}>
           {post.images.map((image, i, self) => (
             <SwiperSlide key={i} className="relative">
-              <MediaContent img={image} current={i + 1} total={self.length} />
+              <MediaContent
+                img={serverUrl(image)}
+                current={i + 1}
+                total={self.length}
+              />
             </SwiperSlide>
           ))}
         </Swiper>
