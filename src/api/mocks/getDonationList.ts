@@ -5,7 +5,7 @@ import { mockAdapter } from '../axiosInstance';
 
 if (USE_MOCK) {
   const data: ScrollResponse<DonationList> = {
-    contents: [
+    content: [
       {
         createdAt: new Date('2024-02-14T17:00'),
         nickname: '부자집사',
@@ -27,7 +27,7 @@ if (USE_MOCK) {
         amount: 100000,
       },
     ],
-    nextCurosr: 3,
+    nextCursor: 3,
   };
   mockAdapter.onGet('/donation/list').reply(200, data);
 }

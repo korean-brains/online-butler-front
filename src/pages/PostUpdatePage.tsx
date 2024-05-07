@@ -16,8 +16,8 @@ const PostUpdatePage = () => {
   useEffect(() => {
     if (!isLoading && post) {
       setParam({
-        caption: post.description,
-        tags: post.tags ? [...post.tags.map((tag) => tag.name)] : [],
+        caption: post.caption,
+        tags: post.tags ? [...post.tags] : [],
       });
     }
   }, [isLoading, post, setParam]);

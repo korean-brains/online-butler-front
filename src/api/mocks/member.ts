@@ -5,7 +5,7 @@ import { MemberProfile, MemberSearchResponse } from '../../types/Member';
 
 if (USE_MOCK) {
   const response1: ScrollResponse<MemberSearchResponse> = {
-    contents: [
+    content: [
       {
         id: 1,
         profile: '/images/profile.jpg',
@@ -25,7 +25,7 @@ if (USE_MOCK) {
         nickname: '사용자 3',
       },
     ],
-    nextCurosr: undefined,
+    nextCursor: undefined,
   };
   mockAdapter.onGet('/members').reply(200, response1);
 

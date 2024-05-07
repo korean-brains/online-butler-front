@@ -29,7 +29,7 @@ const Post = ({ post }: PostProps) => {
     }
     navigator.share({
       title: '온라인 집사',
-      text: post.description,
+      text: post.caption,
       url: `${SHARE_HOST}/post/${post.id}`,
     });
   };
@@ -44,17 +44,17 @@ const Post = ({ post }: PostProps) => {
       <div className="flex items-center px-4">
         <img
           className="aspect-square h-10 rounded-full object-cover"
-          src={post.member.profile || '/images/profile.jpg'}
+          src={post.writer.profile || '/images/profile.jpg'}
           alt="profile"
         />
         <div className="ms-2 flex flex-col">
-          <span>{post.member.nickname}</span>
+          <span>{post.writer.name}</span>
           <span className="text-sm text-gray-500">
             {timeForToday(post.createdAt)}
           </span>
         </div>
         <button className="ms-auto rounded-md bg-gray-200 px-3 py-1 text-sm font-semibold">
-          {post.member.followed ? '팔로잉' : '팔로우'}
+          {post.writer.followed ? '팔로잉' : '팔로우'}
         </button>
       </div>
 
@@ -63,16 +63,16 @@ const Post = ({ post }: PostProps) => {
         <p
           className={`mt-3 text-sm ${showMore ? '' : 'line-clamp-2 text-clip'}`}
         >
-          {post.description}
+          {post.caption}
         </p>
 
         {/* 태그 */}
         {showMore && (
           <div className="mt-3 flex flex-wrap">
-            {post.tags.map((tag) => (
-              <Link to={`/search?keyword=#${tag.name}`}>
-                <span key={tag.id} className="me-1 text-sm text-link">
-                  {`#${tag.name}`}
+            {post.tags.map((idx, tag) => (
+              <Link to={`/search?keyword=#${tag}`}>
+                <span key={idx} className="me-1 text-sm text-link">
+                  {`#${tag}`}
                 </span>
               </Link>
             ))}
@@ -102,11 +102,11 @@ const Post = ({ post }: PostProps) => {
         <button>
           <FontAwesomeIcon icon={faHeart} size="lg" />
         </button>
-        <span className="ms-4">{post.likeNum}</span>
+        <span className="ms-4">{post.likeCount}</span>
         <button className="ms-8">
           <FontAwesomeIcon icon={faComment} size="lg" />
         </button>
-        <span className="ms-4">{post.commentNum}</span>
+        <span className="ms-4">{post.commentCount}</span>
         <button className="ms-8" onClick={handleShare}>
           <FontAwesomeIcon icon={faShareFromSquare} size="lg" />
         </button>

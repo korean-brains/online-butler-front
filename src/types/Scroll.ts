@@ -1,6 +1,6 @@
 export interface ScrollResponse<T> {
-  contents: T[];
-  nextCurosr: any;
+  content: T[];
+  nextCursor: any;
 }
 
 export interface ScrollRequest {
