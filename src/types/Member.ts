@@ -16,7 +16,7 @@ export interface MemberIntroduce extends Member {
   postCount: number;
   followerCount: number;
   followingCount: number;
-  introduce: string;
+  introduction: string;
 }
 
 export interface MemberSearchResponse {

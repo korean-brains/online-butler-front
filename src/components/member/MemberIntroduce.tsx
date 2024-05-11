@@ -40,7 +40,7 @@ const MemberIntroduce = ({ memberIntroduce }: MemberIntroduceProps) => {
           </div>
         </div>
       </div>
-      <p className="my-3">{memberIntroduce.introduce}</p>
+      <p className="my-3">{memberIntroduce.introduction}</p>
     </div>
   );
 };
