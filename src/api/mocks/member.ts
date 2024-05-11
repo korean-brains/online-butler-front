@@ -31,9 +31,9 @@ if (USE_MOCK) {
 
   const response2: MemberProfile = {
     id: 1,
-    profile: '/images/profile.jpg',
-    introduce: '자기소개 내용 자기소개 내용 자기소개 내용 자기소개 내용',
-    nickname: '사용자 1',
+    profileImage: '/images/profile.jpg',
+    introduction: '자기소개 내용 자기소개 내용 자기소개 내용 자기소개 내용',
+    name: '사용자 1',
   };
   mockAdapter.onGet(/\/member\/.+/).reply(200, response2);
 

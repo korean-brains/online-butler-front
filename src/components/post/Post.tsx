@@ -45,7 +45,10 @@ const Post = ({ post }: PostProps) => {
       <div className="flex items-center px-4">
         <img
           className="aspect-square h-10 rounded-full object-cover"
-          src={post.writer.profile || '/images/profile.jpg'}
+          src={
+            (post.writer.profile && serverUrl(post.writer.profile)) ||
+            '/images/default-profile.jpg'
+          }
           alt="profile"
         />
         <div className="ms-2 flex flex-col">
