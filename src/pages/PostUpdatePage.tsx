@@ -5,12 +5,14 @@ import { useParams } from 'react-router-dom';
 import useFetchPost from '../hooks/useFetchPost';
 import useUpdatePost from '../hooks/useUpdatePost';
 import { useEffect, useState } from 'react';
+import serverUrl from '../utils/serverUrl';
 
 const PostUpdatePage = () => {
   const { id } = useParams();
   const { isLoading, data: post } = useFetchPost(parseInt(id!));
-  const { param, setParam, onChangeCaption, deleteTag, submit } =
-    useUpdatePost();
+  const { param, setParam, onChangeCaption, deleteTag, submit } = useUpdatePost(
+    parseInt(id!),
+  );
   const [tag, setTag] = useState<string>('');
 
   useEffect(() => {
@@ -53,7 +55,7 @@ const PostUpdatePage = () => {
             {post?.images.map((image, i) => (
               <img
                 key={i}
-                src={image}
+                src={serverUrl(image)}
                 alt="preview"
                 className="aspect-square w-[80%] snap-center snap-always rounded-lg object-cover"
               />
