@@ -1,22 +1,22 @@
 export interface MemberProfile {
   id: number;
-  profile: string;
-  nickname: string;
-  introduce: string;
+  name: string;
+  introduction: string;
+  profileImage: string;
 }
 
 export interface Member {
   id: number;
-  profile: string;
+  profileImage: string;
   nickname: string;
   followed: boolean;
 }
 
 export interface MemberIntroduce extends Member {
-  postNum: number;
-  followerNum: number;
-  folloingNum: number;
-  introduce: string;
+  postCount: number;
+  followerCount: number;
+  followingCount: number;
+  introduction: string;
 }
 
 export interface MemberSearchResponse {
@@ -28,7 +28,7 @@ export interface MemberSearchResponse {
 
 export interface MemberProfileUpdateRequest {
   id: number;
-  profile: File;
-  nickname: string;
-  introduce: string;
+  name: string;
+  introduction: string;
+  profileImage: File;
 }

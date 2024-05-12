@@ -5,7 +5,7 @@ import { mockAdapter } from '../axiosInstance';
 
 if (USE_MOCK) {
   const data: ScrollResponse<DonationRanking> = {
-    contents: [
+    content: [
       {
         rank: 1,
         nickname: '부자집사',
@@ -22,7 +22,7 @@ if (USE_MOCK) {
         amount: 3000,
       },
     ],
-    nextCurosr: 3,
+    nextCursor: 3,
   };
   mockAdapter.onGet('/donation/ranking').reply(200, data);
 }

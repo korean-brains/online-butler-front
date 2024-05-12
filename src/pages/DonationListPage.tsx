@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
-import DonationList from '../components/donation/DonationList';
 import HeaderBack from '../components/header/HeaderBack';
 import RankingList from '../components/donation/RankingList';
 import { AuthenticationContext } from '../contexts/AuthenticationContext';
 import { useNavigate } from 'react-router-dom';
+import DonationGiveList from '../components/donation/DonationGiveList';
+import DonationReceiveList from '../components/donation/DonationReceiveList';
 
 const DonationListPage = () => {
   const navigate = useNavigate();
-  const [tab, setTab] = useState<string>('sent');
+  const [tab, setTab] = useState<string>('give');
   const { authentication } = useContext(AuthenticationContext);
 
   useEffect(() => {
@@ -21,8 +22,8 @@ const DonationListPage = () => {
       <HeaderBack title="후원내역" />
       <div className="flex border-b border-gray-200">
         <button
-          className={`grow  py-3 ${tab === 'sent' && 'border-b-2 border-black'}`}
-          onClick={() => setTab('sent')}
+          className={`grow  py-3 ${tab === 'give' && 'border-b-2 border-black'}`}
+          onClick={() => setTab('give')}
         >
           후원 한 내역
         </button>
@@ -33,15 +34,15 @@ const DonationListPage = () => {
           후원 랭킹
         </button>
         <button
-          className={`grow py-3 ${tab === 'received' && 'border-b-2 border-black'}`}
-          onClick={() => setTab('received')}
+          className={`grow py-3 ${tab === 'receive' && 'border-b-2 border-black'}`}
+          onClick={() => setTab('receive')}
         >
           후원 받은 내역
         </button>
       </div>
-      {tab === 'sent' && <DonationList type="sent" />}
+      {tab === 'give' && <DonationGiveList />}
       {tab === 'ranking' && <RankingList />}
-      {tab === 'received' && <DonationList type="received" />}
+      {tab === 'receive' && <DonationReceiveList />}
     </>
   );
 };

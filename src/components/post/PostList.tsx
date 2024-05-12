@@ -4,7 +4,9 @@ import useIntersect from '../../hooks/useIntersect';
 import Post from './Post';
 
 const PostList = () => {
-  const { data, hasNextPage, isFetching, fetchNextPage } = useFetchPosts();
+  const { data, hasNextPage, isFetching, fetchNextPage } = useFetchPosts({
+    size: 10,
+  });
 
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);
@@ -14,7 +16,7 @@ const PostList = () => {
   });
 
   const items = useMemo(
-    () => (data ? data.pages.flatMap(({ data }) => data.contents) : []),
+    () => (data ? data.pages.flatMap(({ data }) => data.content) : []),
     [data],
   );
 

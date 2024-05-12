@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import useFetchMemberPosts from '../../hooks/useFetchMemberPosts';
+import useFetchWrittenPosts from '../../hooks/useFetchWrittenPosts';
 import useIntersect from '../../hooks/useIntersect';
+import serverUrl from '../../utils/serverUrl';
+import useFetchLikePosts from '../../hooks/useFetchLikePosts';
 
 interface GridPostProps {
   id: number;
@@ -32,20 +34,19 @@ const GridPost = ({ id }: GridPostProps) => {
           좋아요한 글
         </button>
       </div>
-      <Grid id={id} type={tab} />
+      {tab == 'write' && <WriteGrid id={id} />}
+      {tab == 'like' && <LikeGrid id={id} />}
     </div>
   );
 };
 
 interface GridProps {
   id: number;
-  type: string;
 }
 
-const Grid = ({ id, type }: GridProps) => {
-  const { data, hasNextPage, isFetching, fetchNextPage } = useFetchMemberPosts(
+const WriteGrid = ({ id }: GridProps) => {
+  const { data, hasNextPage, isFetching, fetchNextPage } = useFetchWrittenPosts(
     id,
-    type,
     {
       size: 10,
     },
@@ -59,7 +60,7 @@ const Grid = ({ id, type }: GridProps) => {
   });
 
   const items = useMemo(
-    () => (data ? data.pages.flatMap(({ data }) => data.contents) : []),
+    () => (data ? data.pages.flatMap(({ data }) => data.content) : []),
     [data],
   );
 
@@ -68,7 +69,43 @@ const Grid = ({ id, type }: GridProps) => {
       {items.map((item) => (
         <Link to={`/post/${item.id}`} key={item.id}>
           <img
-            src={item.thumbnail}
+            src={serverUrl(item.images[0])}
+            alt="thumbnail"
+            className="aspect-square object-cover"
+          />
+        </Link>
+      ))}
+      <div ref={ref}></div>
+    </div>
+  );
+};
+
+const LikeGrid = ({ id }: GridProps) => {
+  const { data, hasNextPage, isFetching, fetchNextPage } = useFetchLikePosts(
+    id,
+    {
+      size: 10,
+    },
+  );
+
+  const ref = useIntersect(async (entry, observer) => {
+    observer.unobserve(entry.target);
+    if (hasNextPage && !isFetching) {
+      fetchNextPage();
+    }
+  });
+
+  const items = useMemo(
+    () => (data ? data.pages.flatMap(({ data }) => data.content) : []),
+    [data],
+  );
+
+  return (
+    <div className="grid grid-cols-3 gap-1 p-1">
+      {items.map((item) => (
+        <Link to={`/post/${item.id}`} key={item.id}>
+          <img
+            src={serverUrl(item.images[0])}
             alt="thumbnail"
             className="aspect-square object-cover"
           />

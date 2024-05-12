@@ -72,9 +72,9 @@ const DonationPage = () => {
           className="aspect-square w-16 rounded-lg object-cover"
         />
         <div className="ms-4 flex flex-col">
-          <h1>{post?.member.nickname}</h1>
+          <h1>{post?.writer.name}</h1>
           <span className="line-clamp-2 text-ellipsis text-sm">
-            {post?.description}
+            {post?.caption}
           </span>
         </div>
       </div>

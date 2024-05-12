@@ -1,31 +1,25 @@
-import { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import login from '../api/auth/login';
-import { AuthenticationContext } from '../contexts/AuthenticationContext';
+import useLogin from '../hooks/useLogin';
 
 const LoginPage = () => {
-  const [username, setUsername] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const { setAuthentication } = useContext(AuthenticationContext);
+  const { loginParam, setLoginParam, submit } = useLogin();
   const navigate = useNavigate();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const authentication = await login(username, password);
-      setAuthentication(authentication);
+      await submit();
       navigate('/', { replace: true });
     } catch (error) {
       alert('로그인 실패');
     }
   };
 
-  const handleUsername = (event: React.FormEvent<HTMLInputElement>) => {
-    setUsername(event.currentTarget.value);
-  };
-
-  const handlePassword = (event: React.FormEvent<HTMLInputElement>) => {
-    setPassword(event.currentTarget.value);
+  const onChangeLoginParam = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLoginParam((param) => ({
+      ...param,
+      [event.target.name]: event.target.value,
+    }));
   };
 
   return (
@@ -35,13 +29,13 @@ const LoginPage = () => {
       </Link>
       <form onSubmit={handleSubmit} className="mt-8 flex w-full flex-col gap-5">
         <input
-          id="username"
+          id="email"
           type="text"
-          name="username"
+          name="email"
           placeholder="아이디"
           className="input-primary w-full"
-          value={username}
-          onChange={handleUsername}
+          value={loginParam.email}
+          onChange={onChangeLoginParam}
         />
         <input
           id="password"
@@ -49,8 +43,8 @@ const LoginPage = () => {
           name="password"
           placeholder="비밀번호"
           className="input-primary w-full"
-          value={password}
-          onChange={handlePassword}
+          value={loginParam.password}
+          onChange={onChangeLoginParam}
         />
         <button className="btn-primary w-full">로그인</button>
       </form>

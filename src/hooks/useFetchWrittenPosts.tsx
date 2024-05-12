@@ -3,11 +3,11 @@ import butlerApi from '../api/axiosInstance';
 import { Post } from '../types/Post';
 import { ScrollRequest, ScrollResponse } from '../types/Scroll';
 
-const useFetchPosts = (scrollRequest: ScrollRequest) => {
+const useFetchWrittenPosts = (id: number, scrollRequest: ScrollRequest) => {
   return useInfiniteQuery(
-    ['Posts'],
+    ['WrittenPosts', id],
     ({ pageParam = null }: QueryFunctionContext) =>
-      butlerApi.get<ScrollResponse<Post>>('/api/post', {
+      butlerApi.get<ScrollResponse<Post>>(`/api/member/${id}/post`, {
         params: { cursor: pageParam, size: scrollRequest.size },
       }),
     {
@@ -16,4 +16,4 @@ const useFetchPosts = (scrollRequest: ScrollRequest) => {
   );
 };
 
-export default useFetchPosts;
+export default useFetchWrittenPosts;

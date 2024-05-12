@@ -7,6 +7,7 @@ import { AuthenticationContext } from '../contexts/AuthenticationContext';
 import useInputImage from '../hooks/useInputImage';
 import useUpdateProfile from '../hooks/useUpdateProfile';
 import { useNavigate } from 'react-router-dom';
+import serverUrl from '../utils/serverUrl';
 
 const ProfilePage = () => {
   const { authentication } = useContext(AuthenticationContext);
@@ -20,8 +21,8 @@ const ProfilePage = () => {
       setParam((prev) => ({
         ...prev,
         id: member.id,
-        nickname: member.nickname,
-        introduce: member.introduce,
+        name: member.name,
+        introduction: member.introduction,
       }));
     }
   }, [member, isLoading, setParam]);
@@ -29,7 +30,7 @@ const ProfilePage = () => {
   useEffect(() => {
     setParam((prev) => ({
       ...prev,
-      profile: image,
+      profileImage: image,
     }));
   }, [image, setParam]);
 
@@ -39,15 +40,18 @@ const ProfilePage = () => {
   };
 
   const handleChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setParam((prev) => ({ ...prev, nickname: event.target.value }));
+    setParam((prev) => ({ ...prev, name: event.target.value }));
   };
 
-  const handleChangeIntroduce = (
+  const handleChangeIntroduction = (
     event: React.ChangeEvent<HTMLTextAreaElement>,
   ) => {
-    setParam((prev) => ({ ...prev, introduce: event.target.value }));
+    setParam((prev) => ({ ...prev, introduction: event.target.value }));
   };
 
+  if (isLoading) {
+    return <>Loading...</>;
+  }
   return (
     <>
       <HeaderBack title="프로필 설정">
@@ -58,20 +62,24 @@ const ProfilePage = () => {
       <div className="px-5">
         <div className="relative mx-auto my-8 w-1/3">
           <img
-            src={previewImage || member?.profile}
+            src={
+              previewImage ||
+              (member!.profileImage && serverUrl(member!.profileImage)) ||
+              '/images/default-profile.png'
+            }
             alt="profile"
             className="aspect-square w-full rounded-full object-cover"
           />
 
           <label
-            htmlFor="profile"
+            htmlFor="profileImage"
             className="absolute bottom-0 right-0 flex aspect-square w-10 cursor-pointer items-center justify-center rounded-full bg-slate-200"
           >
             <FontAwesomeIcon icon={faCamera} />
           </label>
           <input
-            id="profile"
-            name="profile"
+            id="profileImage"
+            name="profileImage"
             type="file"
             multiple
             accept="image/*"
@@ -81,26 +89,26 @@ const ProfilePage = () => {
         </div>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-1">
-            <label htmlFor="nickname">별명</label>
+            <label htmlFor="name">별명</label>
             <input
-              id="nickname"
-              name="nickname"
+              id="name"
+              name="name"
               className="input-primary"
               placeholder="별명을 입력해 주세요"
-              value={param.nickname}
+              value={param.name}
               onChange={handleChangeNickname}
             />
           </div>
           <div className="flex flex-col gap-1">
-            <label htmlFor="introduce">자기소개</label>
+            <label htmlFor="introduction">자기소개</label>
             <textarea
-              id="introduce"
-              name="introduce"
+              id="introduction"
+              name="introduction"
               rows={5}
               className="input-primary"
               placeholder="자기소개를 입력해 주세요"
-              value={param.introduce}
-              onChange={handleChangeIntroduce}
+              value={param.introduction}
+              onChange={handleChangeIntroduction}
             />
           </div>
         </div>
