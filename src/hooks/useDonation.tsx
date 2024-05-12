@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { DonationRequest } from '../types/Donation';
 import butlerApi from '../api/axiosInstance';
 import { Bootpay } from '@bootpay/client-js';
+import { AuthenticationContext } from '../contexts/AuthenticationContext';
 
 const useDonation = () => {
+  const { authentication } = useContext(AuthenticationContext);
   const [param, setParam] = useState<DonationRequest>({
-    memberId: 0,
+    receiverId: 0,
     amount: 0,
     message: '',
   });
@@ -18,7 +20,7 @@ const useDonation = () => {
       order_id: 'TEST_ORDER_ID',
       tax_free: 0,
       user: {
-        id: '회원아이디',
+        id: `${authentication.id}`,
         username: '회원이름',
         phone: '01000000000',
         email: 'test@test.com',
@@ -42,9 +44,20 @@ const useDonation = () => {
       case 'issued': // 가상계좌 입금 완료 처리
         break;
       case 'done': // 결제 완료 처리
-        await butlerApi.post('/donation/verify', {
-          receiptId: response.data.receipt_id,
-        });
+        await butlerApi.post(
+          '/api/donation/verify',
+          {
+            receiptId: response.data.receipt_id,
+            giverId: authentication.id,
+            receiverId: param.receiverId,
+            message: param.message,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${authentication.accessToken}`,
+            },
+          },
+        );
         break;
       case 'confirm': //payload.extra.separately_confirmed = true; 일 경우 승인 전 해당 이벤트가 호출됨
         break;
