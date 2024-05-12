@@ -4,14 +4,24 @@ import useFetchPost from '../hooks/useFetchPost';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import useDonation from '../hooks/useDonation';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import serverUrl from '../utils/serverUrl';
 
 const DonationPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { data: post } = useFetchPost(parseInt(id!));
+  const { data: post, isLoading } = useFetchPost(parseInt(id!));
   const { param, setParam, submit } = useDonation();
   const ref = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!isLoading) {
+      setParam((prev) => ({
+        ...prev,
+        receiverId: post!.writer.id,
+      }));
+    }
+  }, [post, isLoading]);
 
   const handleChangeAmount = (event: React.ChangeEvent<HTMLInputElement>) => {
     setParam((prev) => ({
@@ -36,7 +46,7 @@ const DonationPage = () => {
     }));
   };
 
-  const onClickRest = () => {
+  const onClickReset = () => {
     setParam((prev) => ({
       ...prev,
       amount: 0,
@@ -46,8 +56,19 @@ const DonationPage = () => {
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    await submit();
-    navigate(-1);
+    console.log(window.history.state);
+    try {
+      await submit();
+      alert('후원에 성공하였습니다.');
+      // navigate(-2);
+    } catch (e: any) {
+      alert(`결제 실패 : ${e.message}`);
+      if (!(e instanceof Error)) {
+        if (e.error_code !== 'RC_PRICE_LEAST_LT') {
+          // navigate(-1);
+        }
+      }
+    }
   };
 
   return (
@@ -55,7 +76,7 @@ const DonationPage = () => {
       <HeaderBack title="기부하기" />
       <div className="mt-3 flex px-5">
         <img
-          src={post?.images[0]}
+          src={post && serverUrl(post?.images[0])}
           alt="profile"
           className="aspect-square w-16 rounded-lg object-cover"
         />
@@ -83,7 +104,7 @@ const DonationPage = () => {
               className="flex-grow text-right outline-none"
             />
             <span>원</span>
-            <button type="button" onClick={onClickRest}>
+            <button type="button" onClick={onClickReset}>
               <FontAwesomeIcon icon={faXmark} size="xs" />
             </button>
           </div>
@@ -133,7 +154,7 @@ const DonationPage = () => {
             <button
               type="button"
               className="rounded-md border border-gray-300 py-2 text-xs text-gray-600 shadow-sm"
-              onClick={onClickRest}
+              onClick={onClickReset}
             >
               직접입력
             </button>

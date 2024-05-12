@@ -1,7 +1,7 @@
 import { PageRequest } from './Page';
 
 export interface DonationRequest {
-  memberId: number;
+  receiverId: number;
   amount: number;
   message: string;
 }
