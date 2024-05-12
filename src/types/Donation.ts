@@ -1,4 +1,4 @@
-import { ScrollRequest } from './Scroll';
+import { PageRequest } from './Page';
 
 export interface DonationRequest {
   memberId: number;
@@ -12,15 +12,21 @@ export interface DonationRanking {
   amount: number;
 }
 
-export interface DonationList {
-  createdAt: Date;
+export interface DonationGiveListItem {
+  id: number;
   amount: number;
-  nickname: string;
+  receiver: string;
+  createdAt: Date;
 }
 
-export interface DonationListRequest extends ScrollRequest {
-  type: string;
+export interface DonationReceiveListItem {
   id: number;
+  amount: number;
+  giver: string;
+  createdAt: Date;
+}
+
+export interface DonationListRequest extends PageRequest {
   start: Date;
   end: Date;
 }

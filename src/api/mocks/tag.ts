@@ -5,7 +5,7 @@ import { TagSearchResponse } from '../../types/Tag';
 
 if (USE_MOCK) {
   const data: ScrollResponse<TagSearchResponse> = {
-    contents: [
+    content: [
       {
         id: 1,
         name: '태그 1',
@@ -32,7 +32,7 @@ if (USE_MOCK) {
         postNum: 55,
       },
     ],
-    nextCurosr: 6,
+    nextCursor: 6,
   };
   mockAdapter.onGet('/tag').reply(200, data);
 }

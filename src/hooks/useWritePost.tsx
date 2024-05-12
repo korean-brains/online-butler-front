@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { PostWriteRequest } from '../types/Post';
 import butlerApi from '../api/axiosInstance';
+import { AuthenticationContext } from '../contexts/AuthenticationContext';
 
 const useWritePost = () => {
+  const { authentication } = useContext(AuthenticationContext);
   const [param, setParam] = useState<PostWriteRequest>({
     caption: '',
     tags: [],
@@ -11,16 +13,13 @@ const useWritePost = () => {
 
   const submit = async () => {
     const formData = new FormData();
-    formData.append(
-      'post',
-      new Blob([JSON.stringify({ caption: param.caption, tags: param.tags })], {
-        type: 'application/json',
-      }),
-    );
+    formData.append('caption', param.caption);
+    param.tags.forEach((tag) => formData.append('tags', tag));
     param.images.forEach((image) => formData.append('images', image));
 
-    const response = await butlerApi.post('/post', formData, {
+    const response = await butlerApi.post('/api/post', formData, {
       headers: {
+        Authorization: `Bearer ${authentication.accessToken}`,
         'Content-Type': 'multipart/form-data',
       },
     });

@@ -16,7 +16,7 @@ const RankingList = () => {
   });
 
   const items = useMemo(
-    () => (data ? data.pages.flatMap(({ data }) => data.contents) : []),
+    () => (data ? data.pages.flatMap(({ data }) => data.content) : []),
     [data],
   );
   return (

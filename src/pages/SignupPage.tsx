@@ -31,12 +31,12 @@ const SignupPage = () => {
       </Link>
       <form onSubmit={handleSubmit} className="mt-8 flex w-full flex-col gap-5">
         <div>
-          <label htmlFor="username">아이디</label>
+          <label htmlFor="email">아이디</label>
           <input
-            id="username"
+            id="email"
             type="text"
-            name="username"
-            value={signupParam.username}
+            name="email"
+            value={signupParam.email}
             onChange={onChangeSignupParam}
             className="input-primary mt-2 w-full"
           />
@@ -66,12 +66,12 @@ const SignupPage = () => {
           />
         </div>
         <div>
-          <label htmlFor="nickname">별명</label>
+          <label htmlFor="name">별명</label>
           <input
-            id="nickname"
+            id="name"
             type="text"
-            name="nickname"
-            value={signupParam.nickname}
+            name="name"
+            value={signupParam.name}
             onChange={onChangeSignupParam}
             className="input-primary mt-2 w-full"
           />

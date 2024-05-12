@@ -1,24 +1,17 @@
-import { Member } from './Member';
-
 export interface Post {
   id: number;
+  caption: string;
   createdAt: string;
-  description: string;
+  likeCount: number;
+  commentCount: number;
+  writer: {
+    id: number;
+    name: string;
+    profile: string;
+    followed: boolean;
+  };
   images: string[];
-  likeNum: number;
-  commentNum: number;
-  member: Member;
-  tags: Tag[];
-}
-
-export interface MemberPostItem {
-  id: number;
-  thumbnail: string;
-}
-
-export interface Tag {
-  id: number;
-  name: string;
+  tags: string[];
 }
 
 export interface PostWriteRequest {

@@ -1,42 +1,28 @@
-import { faCalendar } from '@fortawesome/free-regular-svg-icons';
+import { useState } from 'react';
+import { DonationListRequest } from '../../types/Donation';
+import useFetchDonationGiveList from '../../hooks/useFetchDonationGiveList';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/locale';
-import 'react-datepicker/dist/react-datepicker.css';
-import useFetchDonationList from '../../hooks/useFetchDonationList';
-import { useContext, useMemo, useState } from 'react';
-import { AuthenticationContext } from '../../contexts/AuthenticationContext';
-import useIntersect from '../../hooks/useIntersect';
 import dateFormat from '../../utils/dateFormat';
-import { DonationListRequest } from '../../types/Donation';
+import PageButtons from '../pagination/PageButtons';
 
-interface DonationListProps {
-  type: string;
-}
-
-const DonationList = ({ type }: DonationListProps) => {
-  const { authentication } = useContext(AuthenticationContext);
+const DonationGiveList = () => {
   const [param, setParam] = useState<DonationListRequest>({
-    type,
-    id: authentication!.id,
+    number: 1,
     size: 10,
     start: new Date(new Date().setMonth(new Date().getMonth() - 1)),
     end: new Date(),
   });
-  const { data, hasNextPage, isFetching, fetchNextPage } =
-    useFetchDonationList(param);
+  const { data } = useFetchDonationGiveList(param);
 
-  const ref = useIntersect(async (entry, observer) => {
-    observer.unobserve(entry.target);
-    if (hasNextPage && !isFetching) {
-      fetchNextPage();
-    }
-  });
-
-  const items = useMemo(
-    () => (data ? data.pages.flatMap(({ data }) => data.contents) : []),
-    [data],
-  );
+  const setPage = (pageNumber: number) => {
+    setParam((prev) => ({
+      ...prev,
+      number: pageNumber,
+    }));
+  };
 
   const handleChangeStart = (date: Date) => {
     setParam((prev) => ({
@@ -89,8 +75,11 @@ const DonationList = ({ type }: DonationListProps) => {
           </tr>
         </thead>
         <tbody>
-          {items.map((item) => (
-            <tr className="border-b border-slate-200 odd:bg-white even:bg-slate-50">
+          {data?.content.map((item) => (
+            <tr
+              key={item.id}
+              className="border-b border-slate-200 odd:bg-white even:bg-slate-50"
+            >
               <td className="px-6 py-3">
                 <div className="flex flex-col">
                   <span>{dateFormat(item.createdAt, 'YYYY-MM-DD')}</span>
@@ -100,14 +89,14 @@ const DonationList = ({ type }: DonationListProps) => {
                 </div>
               </td>
               <td className="px-6 py-3">{item.amount}</td>
-              <td className="px-6 py-3">{item.nickname}</td>
+              <td className="px-6 py-3">{item.receiver}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div ref={ref} className="h-3"></div>
+      <PageButtons pagination={data} paginate={setPage} />
     </>
   );
 };
 
-export default DonationList;
+export default DonationGiveList;

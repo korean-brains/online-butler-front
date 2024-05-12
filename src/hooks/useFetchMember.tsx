@@ -4,7 +4,7 @@ import { MemberProfile } from '../types/Member';
 
 const useFetchMember = (id: number) => {
   return useQuery(['member', id], async () => {
-    const response = await butlerApi.get<MemberProfile>(`/member/${id}`);
+    const response = await butlerApi.get<MemberProfile>(`/api/member/${id}`);
     return response.data;
   });
 };

@@ -5,16 +5,18 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquarePlus } from '@fortawesome/free-regular-svg-icons';
 import useWritePost from '../hooks/useWritePost';
 import useInputImages from '../hooks/useInputImages';
+import { useNavigate } from 'react-router-dom';
 
 const PostWritePage = () => {
   const { param, setParam, submit } = useWritePost();
   const { previewImages, images, onChangeImage } = useInputImages();
   const [tag, setTag] = useState<string>('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     setParam((prev) => ({
       ...prev,
-      image: [...images],
+      images: [...images],
     }));
   }, [images, setParam]);
 
@@ -50,10 +52,15 @@ const PostWritePage = () => {
     }));
   };
 
+  const onClickSubmit = async () => {
+    await submit();
+    navigate('/');
+  };
+
   return (
     <>
       <HeaderBack title="포스팅">
-        <button className="btn-primary px-6" onClick={submit}>
+        <button className="btn-primary px-6" onClick={onClickSubmit}>
           완료
         </button>
       </HeaderBack>
