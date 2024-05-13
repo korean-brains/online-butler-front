@@ -68,7 +68,9 @@ const Post = ({ post }: PostProps) => {
             alt="profile"
           />
           <div className="ms-2 flex flex-col">
-            <span>{post.writer.name}</span>
+            <Link to={`/member/${post.writer.id}/profile`}>
+              <span>{post.writer.name}</span>
+            </Link>
             <span className="text-sm text-gray-500">
               {timeForToday(post.createdAt)}
             </span>
