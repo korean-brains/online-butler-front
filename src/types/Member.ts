@@ -7,8 +7,8 @@ export interface MemberProfile {
 
 export interface Member {
   id: number;
+  name: string;
   profileImage: string;
-  nickname: string;
   followed: boolean;
 }
 

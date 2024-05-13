@@ -18,7 +18,8 @@ import DonationListPage from './pages/DonationListPage';
 import SearchPage from './pages/SearchPage';
 import SearchMemberList from './components/search/SearchMemberList';
 import SearchTagList from './components/search/SearchTagList';
-import ProfilePage from './pages/ProfilePage';
+import ProfileUpdatePage from './pages/ProfileUpdatePage';
+import MemberPage from './pages/MemberPage';
 
 const queryClient = new QueryClient();
 
@@ -84,8 +85,12 @@ const router = createBrowserRouter([
         element: <DonationPage />,
       },
       {
-        path: '/profile',
-        element: <ProfilePage />,
+        path: '/profile/update',
+        element: <ProfileUpdatePage />,
+      },
+      {
+        path: '/member/:id/profile',
+        element: <MemberPage />,
       },
     ],
   },
