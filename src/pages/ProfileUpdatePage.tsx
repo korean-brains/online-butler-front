@@ -9,7 +9,7 @@ import useUpdateProfile from '../hooks/useUpdateProfile';
 import { useNavigate } from 'react-router-dom';
 import serverUrl from '../utils/serverUrl';
 
-const ProfilePage = () => {
+const ProfileUpdatePage = () => {
   const { authentication } = useContext(AuthenticationContext);
   const { data: member, isLoading } = useFetchMember(authentication!.id);
   const { param, setParam, submit } = useUpdateProfile();
@@ -117,4 +117,4 @@ const ProfilePage = () => {
   );
 };
 
-export default ProfilePage;
+export default ProfileUpdatePage;

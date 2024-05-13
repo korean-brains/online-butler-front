@@ -47,7 +47,7 @@ const MyPage = () => {
       {isModalOpen && (
         <Modal closeModal={() => setIsModalOpen(false)}>
           <div className="flex min-w-[300px] flex-col gap-5">
-            <Link to={'/profile'}>
+            <Link to={'/profile/update'}>
               <FontAwesomeIcon icon={faGear} className="w-[24px]" />
               <span className="ms-3">프로필 설정</span>
             </Link>
