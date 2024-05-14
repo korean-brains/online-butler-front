@@ -10,7 +10,6 @@ const butlerApi = axios.create({
 butlerApi.interceptors.request.use((config) => {
   const authentication = getAuthenticationFromLocalStorage();
   if (authentication.isAuthenticated) {
-    console.log(authentication);
     config.headers.Authorization = `Bearer ${authentication.accessToken}`;
   }
   return config;

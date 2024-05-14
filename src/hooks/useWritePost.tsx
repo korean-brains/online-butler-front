@@ -1,10 +1,8 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { PostWriteRequest } from '../types/Post';
 import butlerApi from '../api/axiosInstance';
-import { AuthenticationContext } from '../contexts/AuthenticationContext';
 
 const useWritePost = () => {
-  const { authentication } = useContext(AuthenticationContext);
   const [param, setParam] = useState<PostWriteRequest>({
     caption: '',
     tags: [],
@@ -19,7 +17,6 @@ const useWritePost = () => {
 
     const response = await butlerApi.post('/api/post', formData, {
       headers: {
-        Authorization: `Bearer ${authentication.accessToken}`,
         'Content-Type': 'multipart/form-data',
       },
     });
