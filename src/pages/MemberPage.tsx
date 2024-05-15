@@ -3,6 +3,7 @@ import MemberIntroduce from '../components/member/MemberIntroduce';
 import GridPost from '../components/post/GridPost';
 import HeaderBack from '../components/header/HeaderBack';
 import useFetchMember from '../hooks/useFetchMember';
+import useFollow from '../hooks/useFollow';
 
 const MemberPage = () => {
   const { id } = useParams();
@@ -10,7 +11,9 @@ const MemberPage = () => {
     data: memberIntroduce,
     isLoading,
     isError,
+    refetch,
   } = useFetchMember(parseInt(id!));
+  const { follow, unFollow } = useFollow(parseInt(id!));
 
   if (isLoading) {
     return <>Loading...</>;
@@ -28,12 +31,24 @@ const MemberPage = () => {
     <>
       <HeaderBack title={memberIntroduce ? memberIntroduce.name : ''}>
         {memberIntroduce!.isFollowed && (
-          <button className="ms-auto rounded-md bg-gray-100 px-3 py-1 text-sm">
+          <button
+            className="ms-auto rounded-md bg-gray-100 px-3 py-1 text-sm"
+            onClick={async () => {
+              await unFollow();
+              refetch();
+            }}
+          >
             팔로잉
           </button>
         )}
         {!memberIntroduce!.isFollowed && (
-          <button className="ms-auto rounded-md bg-indigo-400 px-3 py-1 text-sm text-white">
+          <button
+            className="ms-auto rounded-md bg-indigo-400 px-3 py-1 text-sm text-white"
+            onClick={async () => {
+              await follow();
+              refetch();
+            }}
+          >
             팔로우
           </button>
         )}
