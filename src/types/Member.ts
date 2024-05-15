@@ -9,7 +9,7 @@ export interface Member {
   id: number;
   name: string;
   profileImage: string;
-  followed: boolean;
+  isFollowed: boolean;
 }
 
 export interface MemberIntroduce extends Member {

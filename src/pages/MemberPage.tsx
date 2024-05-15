@@ -27,11 +27,13 @@ const MemberPage = () => {
   return (
     <>
       <HeaderBack title={memberIntroduce ? memberIntroduce.name : ''}>
-        {memberIntroduce!.followed && (
-          <button className="btn-primary">팔로잉</button>
+        {memberIntroduce!.isFollowed && (
+          <button className="ms-auto rounded-md bg-gray-100 px-3 py-1 text-sm">
+            팔로잉
+          </button>
         )}
-        {!memberIntroduce!.followed && (
-          <button className="ms-auto rounded-md bg-gray-200 px-3 py-1 text-sm font-semibold">
+        {!memberIntroduce!.isFollowed && (
+          <button className="ms-auto rounded-md bg-indigo-400 px-3 py-1 text-sm text-white">
             팔로우
           </button>
         )}
