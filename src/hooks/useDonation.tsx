@@ -44,20 +44,12 @@ const useDonation = () => {
       case 'issued': // 가상계좌 입금 완료 처리
         break;
       case 'done': // 결제 완료 처리
-        await butlerApi.post(
-          '/api/donation/verify',
-          {
-            receiptId: response.data.receipt_id,
-            giverId: authentication.id,
-            receiverId: param.receiverId,
-            message: param.message,
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${authentication.accessToken}`,
-            },
-          },
-        );
+        await butlerApi.post('/api/donation/verify', {
+          receiptId: response.data.receipt_id,
+          giverId: authentication.id,
+          receiverId: param.receiverId,
+          message: param.message,
+        });
         break;
       case 'confirm': //payload.extra.separately_confirmed = true; 일 경우 승인 전 해당 이벤트가 호출됨
         break;

@@ -16,14 +16,7 @@ export const AuthenticationProvider = ({
   children,
 }: AuthenticationProviderProps) => {
   const [authentication, setAuthentication] = useState<Authentication>(
-    localStorage.getItem('authentication')
-      ? JSON.parse(localStorage.getItem('authentication')!)
-      : {
-          isAuthenticated: false,
-          id: 0,
-          accessToken: '',
-          refreshToken: '',
-        },
+    getAuthenticationFromLocalStorage(),
   );
 
   useEffect(() => {
@@ -37,4 +30,16 @@ export const AuthenticationProvider = ({
       {children}
     </AuthenticationContext.Provider>
   );
+};
+
+export const getAuthenticationFromLocalStorage = (): Authentication => {
+  const auth = localStorage.getItem('authentication');
+  return auth
+    ? JSON.parse(auth!)
+    : {
+        isAuthenticated: false,
+        id: 0,
+        accessToken: '',
+        refreshToken: '',
+      };
 };

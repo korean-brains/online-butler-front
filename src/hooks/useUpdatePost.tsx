@@ -1,11 +1,8 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 import { PostUpdateRequest } from '../types/Post';
 import butlerApi from '../api/axiosInstance';
-import { AuthenticationContext } from '../contexts/AuthenticationContext';
 
 const useUpdatePost = (postId: number) => {
-  const { authentication } = useContext(AuthenticationContext);
-
   const [param, setParam] = useState<PostUpdateRequest>({
     caption: '',
     tags: [],
@@ -26,11 +23,7 @@ const useUpdatePost = (postId: number) => {
   };
 
   const submit = async () => {
-    await butlerApi.patch(`/api/post/${postId}`, param, {
-      headers: {
-        Authorization: `Bearer ${authentication.accessToken}`,
-      },
-    });
+    await butlerApi.patch(`/api/post/${postId}`, param);
   };
 
   return { param, setParam, onChangeCaption, deleteTag, submit };

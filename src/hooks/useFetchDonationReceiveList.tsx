@@ -25,9 +25,6 @@ const useFetchDonationReceiveList = (request: DonationListRequest) => {
       const response = await butlerApi.get<
         PageResponse<DonationReceiveListItem>
       >('/api/donation/receive', {
-        headers: {
-          Authorization: `Bearer ${authentication.accessToken}`,
-        },
         params: {
           number: request.number,
           size: request.size,

@@ -20,17 +20,20 @@ import Modal from '../modal/Modal';
 import { faPencil } from '@fortawesome/free-solid-svg-icons/faPencil';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import useDeletePost from '../../hooks/useDeletePost';
+import useFollow from '../../hooks/useFollow';
 
 interface PostProps {
   post: PostType;
+  refetch: any;
 }
 
-const Post = ({ post }: PostProps) => {
+const Post = ({ post, refetch }: PostProps) => {
   const { authentication } = useContext(AuthenticationContext);
   const [showMore, setShowMore] = useState<boolean>(false);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { submit } = useDeletePost(post.id);
+  const { follow, unFollow } = useFollow(post.writer.id);
 
   const handleShare = () => {
     if (!navigator.canShare) {
@@ -75,9 +78,29 @@ const Post = ({ post }: PostProps) => {
               {timeForToday(post.createdAt)}
             </span>
           </div>
-          <button className="ms-auto rounded-md bg-gray-200 px-3 py-1 text-sm font-semibold">
-            {post.writer.followed ? '팔로잉' : '팔로우'}
-          </button>
+
+          {post.writer.followed && (
+            <button
+              className="ms-auto rounded-md bg-gray-100 px-3 py-1 text-sm"
+              onClick={async () => {
+                await unFollow();
+                refetch();
+              }}
+            >
+              팔로잉
+            </button>
+          )}
+          {!post.writer.followed && (
+            <button
+              className="ms-auto rounded-md bg-indigo-400 px-3 py-1 text-sm text-white"
+              onClick={async () => {
+                await follow();
+                refetch();
+              }}
+            >
+              팔로우
+            </button>
+          )}
           {authentication.id === post.writer.id && (
             <button className="ps-3" onClick={() => setIsModalOpen(true)}>
               <FontAwesomeIcon icon={faEllipsisVertical} />
