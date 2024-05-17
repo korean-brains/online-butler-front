@@ -2,6 +2,7 @@ const Reply = () => {
   return (
     <div className="flex">
       <img
+        alt="profile"
         src="/images/default-profile.png"
         className="aspect-square h-8 rounded-full object-cover"
       />

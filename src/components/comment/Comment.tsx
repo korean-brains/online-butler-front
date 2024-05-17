@@ -11,6 +11,7 @@ const Comment = ({ comment }: CommentProps) => {
   return (
     <div className="flex">
       <img
+        alt="profile"
         src={
           (comment.profile && serverUrl(comment.profile)) ||
           '/images/default-profile.png'
@@ -27,9 +28,7 @@ const Comment = ({ comment }: CommentProps) => {
           <button className="font-semibold">답글 보기</button>
           <button className="font-semibold">답글 달기</button>
         </div>
-        <div className="mt-2">
-          <ReplyList />
-        </div>
+        <div className="mt-2">{/*<ReplyList />*/}</div>
       </div>
     </div>
   );

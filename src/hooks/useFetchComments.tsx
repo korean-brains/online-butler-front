@@ -14,7 +14,7 @@ const useFetchComments = (request: CommentListRequest) => {
         },
       ),
     {
-      getNextPageParam: (current: any, all: any) => current.data.nextCursor,
+      getNextPageParam: (current: any) => current.data.nextCursor,
     },
   );
 };

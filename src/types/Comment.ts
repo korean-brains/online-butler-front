@@ -11,3 +11,12 @@ export interface Comment {
   profile: string;
   createdAt: string;
 }
+
+export interface CommentWriteRequest {
+  postId: number;
+  text: string;
+}
+
+export interface CommentWriteResponse {
+  commentId: number;
+}
