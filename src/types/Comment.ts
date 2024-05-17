@@ -20,3 +20,25 @@ export interface CommentWriteRequest {
 export interface CommentWriteResponse {
   commentId: number;
 }
+
+export interface Reply {
+  id: number;
+  text: string;
+  author: string;
+  profile: string;
+  parentAuthor: string;
+  parentProfile: string;
+  createdAt: string;
+}
+
+export interface ReplyListRequest extends ScrollRequest {
+  commentId: number;
+}
+
+export interface ReplyWriteRequest {
+  text: string;
+}
+
+export interface ReplyWriteResponse {
+  commentId: number;
+}

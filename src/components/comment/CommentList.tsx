@@ -48,7 +48,7 @@ const CommentList = ({ postId }: CommentListProps) => {
           <img
             alt="loading"
             src="/images/spinner.gif"
-            className="mx-auto my-[-25px] w-16"
+            className="mx-auto w-16"
           />
         )}
         <div ref={ref} className="mt-[-100px]"></div>
