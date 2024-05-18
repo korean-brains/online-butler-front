@@ -8,7 +8,10 @@ import {
   faShareFromSquare,
 } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHandHoldingDollar } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHandHoldingDollar,
+  faHeart as faHeartSolid,
+} from '@fortawesome/free-solid-svg-icons';
 import timeForToday from '../../utils/timeForToday';
 import { Link, useNavigate } from 'react-router-dom';
 import React, { useContext, useState } from 'react';
@@ -22,6 +25,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import useDeletePost from '../../hooks/useDeletePost';
 import useFollow from '../../hooks/useFollow';
 import CommentList from '../comment/CommentList';
+import useLike from '../../hooks/useLike';
 
 interface PostProps {
   post: PostType;
@@ -36,6 +40,7 @@ const Post = ({ post, refetch }: PostProps) => {
   const [isCommentModalOpen, setIsCommentModalOpen] = useState<boolean>(false);
   const { submit } = useDeletePost(post.id);
   const { follow, unFollow } = useFollow(post.writer.id);
+  const { like, disLike } = useLike();
 
   const handleShare = () => {
     if (!navigator.canShare) {
@@ -155,9 +160,21 @@ const Post = ({ post, refetch }: PostProps) => {
 
         {/* 아이콘 */}
         <div className="my-2 flex items-center px-4">
-          <button>
-            <FontAwesomeIcon icon={faHeart} size="lg" />
-          </button>
+          {post.liked && (
+            <button onClick={() => disLike({ postId: post.id })}>
+              <FontAwesomeIcon
+                icon={faHeartSolid}
+                size="lg"
+                className="text-red-400"
+              />
+            </button>
+          )}
+
+          {!post.liked && (
+            <button onClick={() => like({ postId: post.id })}>
+              <FontAwesomeIcon icon={faHeart} size="lg" />
+            </button>
+          )}
           <span className="ms-4">{post.likeCount}</span>
           <button className="ms-8" onClick={() => setIsCommentModalOpen(true)}>
             <FontAwesomeIcon icon={faComment} size="lg" />

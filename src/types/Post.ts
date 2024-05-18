@@ -4,6 +4,7 @@ export interface Post {
   createdAt: string;
   likeCount: number;
   commentCount: number;
+  liked: boolean;
   writer: {
     id: number;
     name: string;
