@@ -5,12 +5,12 @@ import useFetchPost from '../hooks/useFetchPost';
 
 const PostPage = () => {
   const { id } = useParams();
-  const { isLoading, data, refetch } = useFetchPost(parseInt(id!));
+  const { isLoading, data } = useFetchPost(parseInt(id!));
 
   return (
     <>
       <HeaderBack title="게시글" />
-      {!isLoading && <Post post={data!} refetch={refetch} />}
+      {!isLoading && <Post post={data!} />}
     </>
   );
 };

@@ -13,7 +13,6 @@ const MemberPage = () => {
     data: memberIntroduce,
     isLoading,
     isError,
-    refetch,
   } = useFetchMember(parseInt(id!));
   const { follow, unFollow } = useFollow(parseInt(id!));
   const { authentication } = useContext(AuthenticationContext);
@@ -37,10 +36,7 @@ const MemberPage = () => {
           memberIntroduce!.isFollowed && (
             <button
               className="ms-auto rounded-md bg-gray-100 px-3 py-1 text-sm"
-              onClick={async () => {
-                await unFollow();
-                refetch();
-              }}
+              onClick={unFollow}
             >
               팔로잉
             </button>
@@ -49,10 +45,7 @@ const MemberPage = () => {
           !memberIntroduce!.isFollowed && (
             <button
               className="ms-auto rounded-md bg-indigo-400 px-3 py-1 text-sm text-white"
-              onClick={async () => {
-                await follow();
-                refetch();
-              }}
+              onClick={follow}
             >
               팔로우
             </button>
