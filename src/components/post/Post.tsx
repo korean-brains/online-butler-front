@@ -85,8 +85,7 @@ const Post = ({ post, refetch }: PostProps) => {
               {timeForToday(post.createdAt)}
             </span>
           </div>
-
-          {post.writer.followed && (
+          {post.writer.followed && post.writer.id !== authentication.id && (
             <button
               className="ms-auto rounded-md bg-gray-100 px-3 py-1 text-sm"
               onClick={async () => {
@@ -97,7 +96,8 @@ const Post = ({ post, refetch }: PostProps) => {
               팔로잉
             </button>
           )}
-          {!post.writer.followed && (
+
+          {!post.writer.followed && post.writer.id !== authentication.id && (
             <button
               className="ms-auto rounded-md bg-indigo-400 px-3 py-1 text-sm text-white"
               onClick={async () => {
@@ -108,8 +108,12 @@ const Post = ({ post, refetch }: PostProps) => {
               팔로우
             </button>
           )}
+
           {authentication.id === post.writer.id && (
-            <button className="ps-3" onClick={() => setIsModalOpen(true)}>
+            <button
+              className="ms-auto ps-3"
+              onClick={() => setIsModalOpen(true)}
+            >
               <FontAwesomeIcon icon={faEllipsisVertical} />
             </button>
           )}
