@@ -29,17 +29,16 @@ import useLike from '../../hooks/useLike';
 
 interface PostProps {
   post: PostType;
-  refetch: any;
 }
 
-const Post = ({ post, refetch }: PostProps) => {
+const Post = ({ post }: PostProps) => {
   const { authentication } = useContext(AuthenticationContext);
   const [showMore, setShowMore] = useState<boolean>(false);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isCommentModalOpen, setIsCommentModalOpen] = useState<boolean>(false);
   const { submit } = useDeletePost(post.id);
-  const { follow, unFollow } = useFollow(post.writer.id);
+  const { follow, unFollow } = useFollow(post.writer.id, post.id);
   const { like, disLike } = useLike();
 
   const handleShare = () => {
@@ -88,10 +87,7 @@ const Post = ({ post, refetch }: PostProps) => {
           {post.writer.followed && post.writer.id !== authentication.id && (
             <button
               className="ms-auto rounded-md bg-gray-100 px-3 py-1 text-sm"
-              onClick={async () => {
-                await unFollow();
-                refetch();
-              }}
+              onClick={unFollow}
             >
               팔로잉
             </button>
@@ -100,10 +96,7 @@ const Post = ({ post, refetch }: PostProps) => {
           {!post.writer.followed && post.writer.id !== authentication.id && (
             <button
               className="ms-auto rounded-md bg-indigo-400 px-3 py-1 text-sm text-white"
-              onClick={async () => {
-                await follow();
-                refetch();
-              }}
+              onClick={follow}
             >
               팔로우
             </button>

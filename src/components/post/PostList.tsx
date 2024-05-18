@@ -4,10 +4,9 @@ import useIntersect from '../../hooks/useIntersect';
 import Post from './Post';
 
 const PostList = () => {
-  const { data, hasNextPage, isFetching, fetchNextPage, refetch } =
-    useFetchPosts({
-      size: 10,
-    });
+  const { data, hasNextPage, isFetching, fetchNextPage } = useFetchPosts({
+    size: 10,
+  });
 
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);
@@ -24,13 +23,7 @@ const PostList = () => {
   return (
     <div>
       {items.map((item, i) => (
-        <Post
-          key={i}
-          post={item}
-          refetch={() => {
-            refetch();
-          }}
-        />
+        <Post key={i} post={item} />
       ))}
       <div ref={ref} className="h-1"></div>
     </div>
