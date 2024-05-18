@@ -13,7 +13,7 @@ const MemberIntroduce = ({ memberIntroduce }: MemberIntroduceProps) => {
           src={
             (memberIntroduce.profileImage &&
               serverUrl(memberIntroduce.profileImage)) ||
-            '/images/default-profile.jpg'
+            '/images/default-profile.png'
           }
           alt="profile"
           className="aspect-square h-16 rounded-full object-cover"

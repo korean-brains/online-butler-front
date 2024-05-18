@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHandHoldingDollar } from '@fortawesome/free-solid-svg-icons';
 import timeForToday from '../../utils/timeForToday';
 import { Link, useNavigate } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { SHARE_HOST } from '../../constants/share';
 import serverUrl from '../../utils/serverUrl';
 import { AuthenticationContext } from '../../contexts/AuthenticationContext';
@@ -21,6 +21,7 @@ import { faPencil } from '@fortawesome/free-solid-svg-icons/faPencil';
 import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import useDeletePost from '../../hooks/useDeletePost';
 import useFollow from '../../hooks/useFollow';
+import CommentList from '../comment/CommentList';
 
 interface PostProps {
   post: PostType;
@@ -32,6 +33,7 @@ const Post = ({ post, refetch }: PostProps) => {
   const [showMore, setShowMore] = useState<boolean>(false);
   const navigate = useNavigate();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isCommentModalOpen, setIsCommentModalOpen] = useState<boolean>(false);
   const { submit } = useDeletePost(post.id);
   const { follow, unFollow } = useFollow(post.writer.id);
 
@@ -66,7 +68,7 @@ const Post = ({ post, refetch }: PostProps) => {
             className="aspect-square h-10 rounded-full object-cover"
             src={
               (post.writer.profile && serverUrl(post.writer.profile)) ||
-              '/images/default-profile.jpg'
+              '/images/default-profile.png'
             }
             alt="profile"
           />
@@ -157,7 +159,7 @@ const Post = ({ post, refetch }: PostProps) => {
             <FontAwesomeIcon icon={faHeart} size="lg" />
           </button>
           <span className="ms-4">{post.likeCount}</span>
-          <button className="ms-8">
+          <button className="ms-8" onClick={() => setIsCommentModalOpen(true)}>
             <FontAwesomeIcon icon={faComment} size="lg" />
           </button>
           <span className="ms-4">{post.commentCount}</span>
@@ -185,6 +187,11 @@ const Post = ({ post, refetch }: PostProps) => {
               <span className="ms-3">게시글 삭제</span>
             </button>
           </div>
+        </Modal>
+      )}
+      {isCommentModalOpen && (
+        <Modal closeModal={() => setIsCommentModalOpen(false)} title="댓글">
+          <CommentList postId={post.id} />
         </Modal>
       )}
     </>
