@@ -29,6 +29,7 @@ export interface Reply {
   parentAuthor: string;
   parentProfile: string;
   createdAt: string;
+  rootCommentId: number;
 }
 
 export interface ReplyListRequest extends ScrollRequest {

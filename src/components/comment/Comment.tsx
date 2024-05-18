@@ -12,7 +12,10 @@ interface CommentProps {
 const Comment = ({ comment }: CommentProps) => {
   const [isOpenReplyList, setIsOpenReplyList] = useState<boolean>(false);
   const [isOpenReplyInput, setIsOpenReplyInput] = useState<boolean>(false);
-  const { param, onChangeText, submit, clearParam } = useWriteReply(comment.id);
+  const { param, onChangeText, submit, clearParam } = useWriteReply(
+    comment.id,
+    comment.id,
+  );
 
   const handleReplySubmit = async () => {
     try {

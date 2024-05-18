@@ -10,11 +10,14 @@ interface ReplyProps {
 
 const Reply = ({ reply }: ReplyProps) => {
   const [isOpenReplyInput, setIsOpenReplyInput] = useState<boolean>(false);
-  const { param, clearParam, submit, onChangeText } = useWriteReply(reply.id);
+  const { param, clearParam, submit, onChangeText } = useWriteReply(
+    reply.id,
+    reply.rootCommentId,
+  );
 
   const handleReplySubmit = async () => {
     try {
-      await submit();
+      submit();
       setIsOpenReplyInput(false);
     } catch (e: any) {
       alert(e.message);
