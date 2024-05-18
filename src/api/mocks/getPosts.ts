@@ -14,6 +14,7 @@ if (USE_MOCK) {
         images: ['/images/cat.jpg', '/images/cat.jpg'],
         likeCount: 1200,
         commentCount: 10,
+        liked: true,
         writer: {
           id: 1,
           profile: '/images/profile.jpg',

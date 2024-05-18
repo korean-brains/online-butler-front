@@ -8,7 +8,10 @@ import {
   faShareFromSquare,
 } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHandHoldingDollar } from '@fortawesome/free-solid-svg-icons';
+import {
+  faHandHoldingDollar,
+  faHeart as faHeartSolid,
+} from '@fortawesome/free-solid-svg-icons';
 import timeForToday from '../../utils/timeForToday';
 import { Link, useNavigate } from 'react-router-dom';
 import React, { useContext, useState } from 'react';
@@ -22,6 +25,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash';
 import useDeletePost from '../../hooks/useDeletePost';
 import useFollow from '../../hooks/useFollow';
 import CommentList from '../comment/CommentList';
+import useLike from '../../hooks/useLike';
 
 interface PostProps {
   post: PostType;
@@ -36,6 +40,7 @@ const Post = ({ post, refetch }: PostProps) => {
   const [isCommentModalOpen, setIsCommentModalOpen] = useState<boolean>(false);
   const { submit } = useDeletePost(post.id);
   const { follow, unFollow } = useFollow(post.writer.id);
+  const { like, disLike } = useLike();
 
   const handleShare = () => {
     if (!navigator.canShare) {
@@ -80,8 +85,7 @@ const Post = ({ post, refetch }: PostProps) => {
               {timeForToday(post.createdAt)}
             </span>
           </div>
-
-          {post.writer.followed && (
+          {post.writer.followed && post.writer.id !== authentication.id && (
             <button
               className="ms-auto rounded-md bg-gray-100 px-3 py-1 text-sm"
               onClick={async () => {
@@ -92,7 +96,8 @@ const Post = ({ post, refetch }: PostProps) => {
               팔로잉
             </button>
           )}
-          {!post.writer.followed && (
+
+          {!post.writer.followed && post.writer.id !== authentication.id && (
             <button
               className="ms-auto rounded-md bg-indigo-400 px-3 py-1 text-sm text-white"
               onClick={async () => {
@@ -103,8 +108,12 @@ const Post = ({ post, refetch }: PostProps) => {
               팔로우
             </button>
           )}
+
           {authentication.id === post.writer.id && (
-            <button className="ps-3" onClick={() => setIsModalOpen(true)}>
+            <button
+              className="ms-auto ps-3"
+              onClick={() => setIsModalOpen(true)}
+            >
               <FontAwesomeIcon icon={faEllipsisVertical} />
             </button>
           )}
@@ -155,9 +164,21 @@ const Post = ({ post, refetch }: PostProps) => {
 
         {/* 아이콘 */}
         <div className="my-2 flex items-center px-4">
-          <button>
-            <FontAwesomeIcon icon={faHeart} size="lg" />
-          </button>
+          {post.liked && (
+            <button onClick={() => disLike({ postId: post.id })}>
+              <FontAwesomeIcon
+                icon={faHeartSolid}
+                size="lg"
+                className="text-red-400"
+              />
+            </button>
+          )}
+
+          {!post.liked && (
+            <button onClick={() => like({ postId: post.id })}>
+              <FontAwesomeIcon icon={faHeart} size="lg" />
+            </button>
+          )}
           <span className="ms-4">{post.likeCount}</span>
           <button className="ms-8" onClick={() => setIsCommentModalOpen(true)}>
             <FontAwesomeIcon icon={faComment} size="lg" />
