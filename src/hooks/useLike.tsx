@@ -16,10 +16,10 @@ const useLike = () => {
   );
 
   const disLikeMutation = useMutation(
-    (param: LikeRequest) => butlerApi.delete('/api/like', { data: param }),
+    (param: DisLikeRequest) => butlerApi.delete('/api/like', { data: param }),
     {
       onSuccess: (data, param, context) => {
-        queryClient.invalidateQueries(['posts', param.postId]);
+        queryClient.invalidateQueries(['post', param.postId]);
         queryClient.invalidateQueries(['posts']);
       },
     },
