@@ -124,10 +124,8 @@ const Post = ({ post }: PostProps) => {
           {showMore && (
             <div className="mt-3 flex flex-wrap">
               {post.tags.map((tag, idx) => (
-                <Link to={`/search?keyword=#${tag}`}>
-                  <span key={idx} className="me-1 text-sm text-link">
-                    {`#${tag}`}
-                  </span>
+                <Link key={idx} to={`/search?keyword=%23${tag}`}>
+                  <span className="me-1 text-sm text-link">{`#${tag}`}</span>
                 </Link>
               ))}
             </div>

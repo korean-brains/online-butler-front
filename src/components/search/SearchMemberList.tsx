@@ -1,14 +1,15 @@
-import { useParams } from 'react-router-dom';
 import useFetchMembers from '../../hooks/useFetchMembers';
 import useIntersect from '../../hooks/useIntersect';
 import { useMemo } from 'react';
 import SearchMemberListItem from './SearchMemberListItem';
 
-const SearchMemberList = () => {
-  const params = useParams();
-  const { data, isFetching, hasNextPage, fetchNextPage } = useFetchMembers(
-    params.query!,
-  );
+interface SearchMemberListProps {
+  name: string;
+}
+
+const SearchMemberList = ({ name }: SearchMemberListProps) => {
+  const { data, isFetching, hasNextPage, fetchNextPage } =
+    useFetchMembers(name);
 
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);
