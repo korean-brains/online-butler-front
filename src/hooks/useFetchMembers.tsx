@@ -6,12 +6,15 @@ import { MemberSearchResponse } from '../types/Member';
 const useFetchMembers = (query: string) => {
   return useInfiniteQuery(
     ['search member', query],
-    ({ pageParam = 0 }: QueryFunctionContext) =>
-      butlerApi.get<ScrollResponse<MemberSearchResponse>>(`/members`, {
-        params: { cursor: pageParam, size: 10, query },
-      }),
+    ({ pageParam = null }: QueryFunctionContext) =>
+      butlerApi.get<ScrollResponse<MemberSearchResponse>>(
+        `/api/member/search`,
+        {
+          params: { cursor: pageParam, size: 10, name: query },
+        },
+      ),
     {
-      getNextPageParam: (current: any, all: any) => current,
+      getNextPageParam: (current: any) => current.data.nextCursor,
     },
   );
 };

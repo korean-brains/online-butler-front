@@ -20,6 +20,7 @@ import SearchMemberList from './components/search/SearchMemberList';
 import SearchTagList from './components/search/SearchTagList';
 import ProfileUpdatePage from './pages/ProfileUpdatePage';
 import MemberPage from './pages/MemberPage';
+import TagPostPage from './pages/TagPostPage';
 
 const queryClient = new QueryClient();
 
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
       {
         path: '/member/:id/profile',
         element: <MemberPage />,
+      },
+      {
+        path: '/tag/:tag',
+        element: <TagPostPage />,
       },
     ],
   },
