@@ -9,27 +9,27 @@ if (USE_MOCK) {
       {
         id: 1,
         name: '태그 1',
-        postNum: 1000,
+        postCount: 1000,
       },
       {
         id: 2,
         name: '태그 2',
-        postNum: 100000,
+        postCount: 100000,
       },
       {
         id: 3,
         name: '태그 3',
-        postNum: 2342,
+        postCount: 2342,
       },
       {
         id: 4,
         name: '태그 4',
-        postNum: 144,
+        postCount: 144,
       },
       {
         id: 5,
         name: '태그 5',
-        postNum: 55,
+        postCount: 55,
       },
     ],
     nextCursor: 6,

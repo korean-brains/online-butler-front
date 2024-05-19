@@ -22,8 +22,8 @@ const PostList = () => {
 
   return (
     <div>
-      {items.map((item, i) => (
-        <Post key={i} post={item} />
+      {items.map((item) => (
+        <Post key={item.id} post={item} />
       ))}
       <div ref={ref} className="h-1"></div>
     </div>

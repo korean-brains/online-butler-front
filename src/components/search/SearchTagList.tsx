@@ -1,14 +1,14 @@
-import { useParams } from 'react-router-dom';
 import useIntersect from '../../hooks/useIntersect';
 import { useMemo } from 'react';
 import useFetchTags from '../../hooks/useFetchTags';
 import SearchTagListItem from './SearchTagListItem';
 
-const SearchTagList = () => {
-  const params = useParams();
-  const { data, isFetching, hasNextPage, fetchNextPage } = useFetchTags(
-    params.query!,
-  );
+interface SearchTagListProps {
+  tag: string;
+}
+
+const SearchTagList = ({ tag }: SearchTagListProps) => {
+  const { data, isFetching, hasNextPage, fetchNextPage } = useFetchTags(tag);
 
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);

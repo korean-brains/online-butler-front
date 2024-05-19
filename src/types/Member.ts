@@ -21,9 +21,9 @@ export interface MemberIntroduce extends Member {
 
 export interface MemberSearchResponse {
   id: number;
-  profile: string;
-  nickname: string;
-  introduce: string;
+  profileImage: string;
+  name: string;
+  introduction: string;
 }
 
 export interface MemberProfileUpdateRequest {

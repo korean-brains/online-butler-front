@@ -15,7 +15,7 @@ const SearchTagListItem = ({ tag }: SearchTagListProps) => {
         </span>
         <div className="ms-3 flex flex-col">
           <span>{tag.name}</span>
-          <p className="text-sm text-gray-400">{`게시물 ${numberToKorean(tag.postNum)}`}</p>
+          <p className="text-sm text-gray-400">{`게시물 ${numberToKorean(tag.postCount)}`}</p>
         </div>
       </div>
     </Link>

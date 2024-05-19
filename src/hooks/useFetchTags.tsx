@@ -7,11 +7,11 @@ const useFetchMembers = (query: string) => {
   return useInfiniteQuery(
     ['search tag', query],
     ({ pageParam = 0 }: QueryFunctionContext) =>
-      butlerApi.get<ScrollResponse<TagSearchResponse>>(`/tag`, {
+      butlerApi.get<ScrollResponse<TagSearchResponse>>('/api/tag', {
         params: { cursor: pageParam, size: 10, tag: query },
       }),
     {
-      getNextPageParam: (current: any, all: any) => current,
+      getNextPageParam: (current: any) => current.data.nextCursor,
     },
   );
 };

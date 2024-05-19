@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useNavigate } from 'react-router-dom';
 
 interface HeaderBackProps {
-  title: string;
+  title?: string;
   children?: React.ReactNode;
 }
 
@@ -21,8 +21,12 @@ const HeaderBack = ({ title, children }: HeaderBackProps) => {
           className="aspect-square w-[24px]"
         />
       </button>
-      <span className="ms-3 font-semibold">{title}</span>
-      <div className="ml-auto flex items-center">{children}</div>
+      {title && <span className="ms-3 font-semibold">{title}</span>}
+      {children && (
+        <div className="flex flex-grow items-center justify-end">
+          {children}
+        </div>
+      )}
     </div>
   );
 };
