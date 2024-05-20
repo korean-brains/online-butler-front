@@ -7,18 +7,18 @@ if (USE_MOCK) {
   const data: ScrollResponse<DonationRanking> = {
     content: [
       {
-        rank: 1,
-        nickname: '부자집사',
+        id: 1,
+        name: '부자집사',
         amount: 100000,
       },
       {
-        rank: 2,
-        nickname: '덜부자집사',
+        id: 2,
+        name: '덜부자집사',
         amount: 20000,
       },
       {
-        rank: 3,
-        nickname: '거지집사',
+        id: 3,
+        name: '거지집사',
         amount: 3000,
       },
     ],
