@@ -32,9 +32,6 @@ const useFetchDonationList = (request: DonationListRequest) => {
       );
       return response.data;
     },
-    // {
-    //   enabled: false,
-    // },
   );
 };
 

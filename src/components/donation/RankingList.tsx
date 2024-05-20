@@ -1,24 +1,22 @@
-import { useContext, useMemo } from 'react';
+import { useState } from 'react';
 import useFetchDonationRanking from '../../hooks/useFetchDonationRanking';
-import useIntersect from '../../hooks/useIntersect';
-import { AuthenticationContext } from '../../contexts/AuthenticationContext';
+import { DonationRankingListRequest } from '../../types/Donation';
+import PageButtons from '../pagination/PageButtons';
 
 const RankingList = () => {
-  const { authentication } = useContext(AuthenticationContext);
-  const { data, hasNextPage, isFetching, fetchNextPage } =
-    useFetchDonationRanking(authentication!.id);
-
-  const ref = useIntersect(async (entry, observer) => {
-    observer.unobserve(entry.target);
-    if (hasNextPage && !isFetching) {
-      fetchNextPage();
-    }
+  const [param, setParam] = useState<DonationRankingListRequest>({
+    number: 1,
+    size: 10,
   });
+  const { data } = useFetchDonationRanking(param);
 
-  const items = useMemo(
-    () => (data ? data.pages.flatMap(({ data }) => data.content) : []),
-    [data],
-  );
+  const setPage = (pageNumber: number) => {
+    setParam((prev) => ({
+      ...prev,
+      number: pageNumber,
+    }));
+  };
+
   return (
     <>
       <table className="w-full table-fixed text-left">
@@ -30,16 +28,21 @@ const RankingList = () => {
           </tr>
         </thead>
         <tbody>
-          {items.map((item) => (
-            <tr className="border-b border-slate-200 odd:bg-white even:bg-slate-50">
-              <td className="break-words px-6 py-3">{item.rank}</td>
-              <td className="break-words px-6 py-3">{item.nickname}</td>
+          {data?.content.map((item, i) => (
+            <tr
+              key={item.id}
+              className="border-b border-slate-200 odd:bg-white even:bg-slate-50"
+            >
+              <td className="break-words px-6 py-3">
+                {i + (param.number - 1) * param.size + 1}
+              </td>
+              <td className="break-words px-6 py-3">{item.name}</td>
               <td className="break-words px-6 py-3">{item.amount}</td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div ref={ref} className="h-3"></div>
+      <PageButtons pagination={data} paginate={setPage} />
     </>
   );
 };

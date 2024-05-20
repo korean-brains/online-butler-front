@@ -1,17 +1,26 @@
-import { QueryFunctionContext, useInfiniteQuery } from 'react-query';
+import { useQuery } from 'react-query';
 import butlerApi from '../api/axiosInstance';
-import { ScrollResponse } from '../types/Scroll';
-import { DonationRanking } from '../types/Donation';
+import { DonationRanking, DonationRankingListRequest } from '../types/Donation';
+import { useContext } from 'react';
+import { AuthenticationContext } from '../contexts/AuthenticationContext';
+import { PageResponse } from '../types/Page';
 
-const useFetchDonationRanking = (id: number) => {
-  return useInfiniteQuery(
-    ['donation raking', id],
-    ({ pageParam = 0 }: QueryFunctionContext) =>
-      butlerApi.get<ScrollResponse<DonationRanking>>('/donation/ranking', {
-        params: { page: pageParam, size: 10, id },
-      }),
-    {
-      getNextPageParam: (current: any, all: any) => current,
+const useFetchDonationRanking = (request: DonationRankingListRequest) => {
+  const { authentication } = useContext(AuthenticationContext);
+
+  return useQuery(
+    ['donation ranking list', authentication.id, request.number, request.size],
+    async () => {
+      const response = await butlerApi.get<PageResponse<DonationRanking>>(
+        '/api/donation/ranking',
+        {
+          params: {
+            number: request.number,
+            size: request.size,
+          },
+        },
+      );
+      return response.data;
     },
   );
 };

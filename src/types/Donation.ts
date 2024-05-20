@@ -7,10 +7,12 @@ export interface DonationRequest {
 }
 
 export interface DonationRanking {
-  rank: number;
-  nickname: string;
+  id: number;
+  name: string;
   amount: number;
 }
+
+export interface DonationRankingListRequest extends PageRequest {}
 
 export interface DonationGiveListItem {
   id: number;
