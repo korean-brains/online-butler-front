@@ -34,12 +34,14 @@ export const AuthenticationProvider = ({
 
 export const getAuthenticationFromLocalStorage = (): Authentication => {
   const auth = localStorage.getItem('authentication');
-  return auth
-    ? JSON.parse(auth!)
-    : {
-        isAuthenticated: false,
-        id: 0,
-        accessToken: '',
-        refreshToken: '',
-      };
+  return auth ? JSON.parse(auth!) : getInitialAuthentication();
+};
+
+export const getInitialAuthentication = (): Authentication => {
+  return {
+    isAuthenticated: false,
+    id: 0,
+    accessToken: '',
+    refreshToken: '',
+  };
 };
