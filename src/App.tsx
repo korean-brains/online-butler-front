@@ -20,7 +20,13 @@ import ProfileUpdatePage from './pages/ProfileUpdatePage';
 import MemberPage from './pages/MemberPage';
 import TagPostPage from './pages/TagPostPage';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: false,
+    },
+  },
+});
 
 const router = createBrowserRouter([
   {
