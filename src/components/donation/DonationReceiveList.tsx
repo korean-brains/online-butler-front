@@ -3,6 +3,7 @@ import { DonationListRequest } from '../../types/Donation';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar } from '@fortawesome/free-regular-svg-icons';
 import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale';
 import dateFormat from '../../utils/dateFormat';
 import PageButtons from '../pagination/PageButtons';
@@ -24,47 +25,50 @@ const DonationReceiveList = () => {
     }));
   };
 
-  const handleChangeStart = (date: Date) => {
+  const handleChangeStart = (date: Date | null) => {
     setParam((prev) => ({
       ...prev,
+      number: 1,
       start: date,
     }));
   };
 
-  const handleChangeEnd = (date: Date) => {
+  const handleChangeEnd = (date: Date | null) => {
     setParam((prev) => ({
       ...prev,
+      number: 1,
       end: date,
     }));
   };
 
+  const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!param.start || !param.end) {
+      alert('날짜를 입력해 주세요.');
+      return;
+    }
+  };
+
   return (
     <>
-      <form className="flex items-center justify-center py-3">
+      <form
+        className="flex items-center justify-center gap-3 py-3"
+        onSubmit={onSubmit}
+      >
         <FontAwesomeIcon icon={faCalendar} size="lg" />
-        <div>
-          <DatePicker
-            id="start"
-            name="start"
-            locale={ko}
-            dateFormat="yyyy.MM.dd"
-            className="input-primary ms-3"
-            selected={param.start}
-            onChange={handleChangeStart}
-          />
-        </div>
-        <span className="mx-3">~</span>
-        <div>
-          <DatePicker
-            id="end"
-            name="end"
-            locale={ko}
-            dateFormat="yyyy.MM.dd"
-            className="input-primary"
-            selected={param.end}
-            onChange={handleChangeEnd}
-          />
-        </div>
+        <DatePicker
+          selected={param.start}
+          onChange={(dates) => {
+            handleChangeStart(dates[0]);
+            handleChangeEnd(dates[1]);
+          }}
+          locale={ko}
+          dateFormat="yyyy.MM.dd"
+          startDate={param.start}
+          endDate={param.end}
+          selectsRange
+          customInput={<input className="input-primary w-52 text-center" />}
+        />
       </form>
       <table className="w-full table-fixed text-left">
         <thead className="bg-gray-50">
