@@ -22,14 +22,15 @@ const useFetchDonationReceiveList = (request: DonationListRequest) => {
       request.size,
     ],
     async () => {
+      if (!request.start || !request.end) return;
       const response = await butlerApi.get<
         PageResponse<DonationReceiveListItem>
       >('/api/donation/receive', {
         params: {
           number: request.number,
           size: request.size,
-          start: dateFormat(request.start, 'YYYY-MM-DDT00:00:00'),
-          end: dateFormat(request.end, 'YYYY-MM-DDT23:59:59.999'),
+          start: dateFormat(request.start!, 'YYYY-MM-DDT00:00:00'),
+          end: dateFormat(request.end!, 'YYYY-MM-DDT23:59:59.999'),
         },
       });
       return response.data;

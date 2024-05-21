@@ -29,6 +29,6 @@ export interface DonationReceiveListItem {
 }
 
 export interface DonationListRequest extends PageRequest {
-  start: Date;
-  end: Date;
+  start: Date | null;
+  end: Date | null;
 }
