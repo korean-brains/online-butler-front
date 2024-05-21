@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { CommentWriteRequest, CommentWriteResponse } from '../types/Comment';
 import butlerApi from '../api/axiosInstance';
+import { useMutation, useQueryClient } from 'react-query';
 
 const useWriteComment = (postId: number) => {
+  const queryClient = useQueryClient();
   const [param, setParam] = useState<CommentWriteRequest>({
     postId: postId,
     text: '',
@@ -12,9 +14,19 @@ const useWriteComment = (postId: number) => {
     setParam((prev) => ({ ...prev, text: event.target.value }));
   };
 
+  const mutation = useMutation(
+    (param: CommentWriteRequest) =>
+      butlerApi.post<CommentWriteResponse>('/api/comment', param),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['comments', param.postId]);
+      },
+    },
+  );
+
   const submit = async () => {
     validateParam();
-    await butlerApi.post<CommentWriteResponse>('/api/comment', param);
+    await mutation.mutateAsync(param);
     setParam({
       postId: postId,
       text: '',
