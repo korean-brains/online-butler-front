@@ -9,11 +9,10 @@ interface CommentListProps {
 }
 
 const CommentList = ({ postId }: CommentListProps) => {
-  const { data, hasNextPage, isFetching, fetchNextPage, refetch } =
-    useFetchComments({
-      postId: postId,
-      size: 10,
-    });
+  const { data, hasNextPage, isFetching, fetchNextPage } = useFetchComments({
+    postId: postId,
+    size: 10,
+  });
 
   const ref = useIntersect(async (entry, observer) => {
     observer.unobserve(entry.target);
@@ -32,7 +31,6 @@ const CommentList = ({ postId }: CommentListProps) => {
   const handleCommentSubmit = async () => {
     try {
       await submit();
-      refetch();
     } catch (e: any) {
       alert(e.message);
     }
@@ -40,7 +38,7 @@ const CommentList = ({ postId }: CommentListProps) => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex max-h-[450px] flex-col gap-5 overflow-y-scroll scrollbar-hide">
+      <div className="flex h-[300px] flex-col gap-5 overflow-y-scroll scrollbar-hide">
         {comments.map((comment) => (
           <Comment key={comment.id} comment={comment} />
         ))}

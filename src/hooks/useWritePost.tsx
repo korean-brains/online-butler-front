@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { PostWriteRequest } from '../types/Post';
 import butlerApi from '../api/axiosInstance';
+import { useMutation } from 'react-query';
 
 const useWritePost = () => {
   const [param, setParam] = useState<PostWriteRequest>({
@@ -9,18 +10,21 @@ const useWritePost = () => {
     images: [],
   });
 
-  const submit = async () => {
+  const mutation = useMutation((param: PostWriteRequest) => {
     const formData = new FormData();
     formData.append('caption', param.caption);
     param.tags.forEach((tag) => formData.append('tags', tag));
     param.images.forEach((image) => formData.append('images', image));
 
-    const response = await butlerApi.post('/api/post', formData, {
+    return butlerApi.post('/api/post', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     });
+  });
 
+  const submit = async () => {
+    const response = await mutation.mutateAsync(param);
     return response.data;
   };
 
