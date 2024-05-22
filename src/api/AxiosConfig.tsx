@@ -56,10 +56,7 @@ const AxiosConfig = () => {
               return refreshApi(config);
             } catch (e: any) {
               setAuthentication(getInitialAuthentication());
-              navigate('/');
-              setTimeout(() => {
-                alert('토큰이 만료되어 자동으로 로그아웃 되었습니다.');
-              }, 100);
+              navigate('/login');
             }
           }
         }

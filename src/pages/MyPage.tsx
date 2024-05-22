@@ -26,7 +26,7 @@ const MyPage = () => {
 
   useEffect(() => {
     if (!authentication.isAuthenticated) {
-      navigate('/login', { replace: true });
+      navigate('/login?redirect=/mypage', { replace: true });
     }
   }, [authentication, navigate]);
 

@@ -1,15 +1,16 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import useLogin from '../hooks/useLogin';
 
 const LoginPage = () => {
   const { loginParam, setLoginParam, submit } = useLogin();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       await submit();
-      navigate('/', { replace: true });
+      navigate(searchParams.get('redirect') || '/', { replace: true });
     } catch (error) {
       alert('로그인 실패');
     }
