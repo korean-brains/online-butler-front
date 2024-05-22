@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import HeaderBack from '../components/header/HeaderBack';
 import useFetchPost from '../hooks/useFetchPost';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,7 +9,6 @@ import serverUrl from '../utils/serverUrl';
 
 const DonationPage = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
   const { data: post, isLoading } = useFetchPost(parseInt(id!));
   const { param, setParam, submit } = useDonation();
   const ref = useRef<HTMLInputElement>(null);
@@ -21,7 +20,7 @@ const DonationPage = () => {
         receiverId: post!.writer.id,
       }));
     }
-  }, [post, isLoading]);
+  }, [post, isLoading, setParam]);
 
   const handleChangeAmount = (event: React.ChangeEvent<HTMLInputElement>) => {
     setParam((prev) => ({
@@ -60,14 +59,8 @@ const DonationPage = () => {
     try {
       await submit();
       alert('후원에 성공하였습니다.');
-      // navigate(-2);
     } catch (e: any) {
       alert(`결제 실패 : ${e.message}`);
-      if (!(e instanceof Error)) {
-        if (e.error_code !== 'RC_PRICE_LEAST_LT') {
-          // navigate(-1);
-        }
-      }
     }
   };
 

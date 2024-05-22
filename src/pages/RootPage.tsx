@@ -4,9 +4,9 @@ import AxiosConfig from '../api/AxiosConfig';
 
 const RootPage = () => {
   return (
-    <div className="flex h-dvh flex-col">
+    <div className="relative flex min-h-dvh flex-col bg-white">
       <AxiosConfig />
-      <div className="flex-grow overflow-y-scroll scrollbar-hide">
+      <div className="w-full flex-grow">
         <Outlet />
       </div>
       <BottomNavigation />

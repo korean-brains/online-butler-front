@@ -13,7 +13,7 @@ const SearchPage = () => {
   useEffect(() => {
     searchParams.set('keyword', query);
     setSearchParams(searchParams, { replace: true });
-  }, [query]);
+  }, [query, searchParams, setSearchParams]);
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();

@@ -72,7 +72,7 @@ const AxiosConfig = () => {
       butlerApi.interceptors.request.eject(requestInterceptor);
       butlerApi.interceptors.response.eject(responseInterceptor);
     };
-  }, [authentication]);
+  }, [authentication, setAuthentication, navigate]);
 
   return <></>;
 };
