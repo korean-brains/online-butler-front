@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import butlerApi from '../api/axiosInstance';
 import { MemberProfileUpdateRequest } from '../types/Member';
-import { useMutation, useQueryClient } from 'react-query';
+import { useMutation } from 'react-query';
 
 const useUpdateProfile = () => {
   const [param, setParam] = useState<MemberProfileUpdateRequest>({
