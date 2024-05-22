@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 interface ModalProps {
   title?: string;
   closeModal(): void;
@@ -11,9 +13,16 @@ const Modal = ({ title, closeModal, children }: ModalProps) => {
     }
   };
 
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, []);
+
   return (
     <div
-      className="absolute top-0 z-50 flex h-full w-full items-center justify-center rounded-sm bg-black bg-opacity-40 px-5"
+      className="fixed bottom-0 left-0 right-0 top-0 z-50 flex h-full items-center justify-center rounded-sm bg-black bg-opacity-40 px-5"
       onClick={handleClose}
     >
       <div className="min-w-0 break-words rounded-lg bg-white p-5 shadow-md">
