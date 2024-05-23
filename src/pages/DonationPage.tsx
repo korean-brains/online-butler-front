@@ -1,4 +1,4 @@
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import HeaderBack from '../components/header/HeaderBack';
 import useFetchPost from '../hooks/useFetchPost';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -12,6 +12,7 @@ const DonationPage = () => {
   const { data: post, isLoading } = useFetchPost(parseInt(id!));
   const { param, setParam, submit } = useDonation();
   const ref = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isLoading) {
@@ -55,13 +56,17 @@ const DonationPage = () => {
 
   const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log(window.history.state);
+    if (param.amount === 0) {
+      alert('금액을 입력해 주세요');
+      return;
+    }
     try {
       await submit();
       alert('후원에 성공하였습니다.');
     } catch (e: any) {
-      alert(`결제 실패 : ${e.message}`);
+      alert(`후원에 실패하였습니다. 이유 : ${e.message}`);
     }
+    navigate(-1);
   };
 
   return (

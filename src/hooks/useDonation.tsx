@@ -1,8 +1,14 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { DonationRequest } from '../types/Donation';
 import butlerApi from '../api/axiosInstance';
-import { Bootpay } from '@bootpay/client-js';
 import { AuthenticationContext } from '../contexts/AuthenticationContext';
+import uuid from 'react-uuid';
+
+declare global {
+  interface Window {
+    PortOne?: any;
+  }
+}
 
 const useDonation = () => {
   const { authentication } = useContext(AuthenticationContext);
@@ -12,48 +18,39 @@ const useDonation = () => {
     message: '',
   });
 
-  const submit = async () => {
-    const response = await Bootpay.requestPayment({
-      application_id: `${process.env.REACT_APP_BOOTPAY_ID}`,
-      price: param.amount,
-      order_name: '테스트결제',
-      order_id: 'TEST_ORDER_ID',
-      tax_free: 0,
-      user: {
-        id: `${authentication.id}`,
-        username: '회원이름',
-        phone: '01000000000',
-        email: 'test@test.com',
-      },
-      items: [
-        {
-          id: 'item_id',
-          name: '테스트아이템',
-          qty: 1,
-          price: param.amount,
-        },
-      ],
-      extra: {
-        open_type: 'iframe',
-        card_quota: '0,2,3',
-        escrow: false,
-      },
-    });
+  useEffect(() => {
+    const iamport = document.createElement('script');
+    iamport.src = 'https://cdn.portone.io/v2/browser-sdk.js';
+    document.head.appendChild(iamport);
 
-    switch (response.event) {
-      case 'issued': // 가상계좌 입금 완료 처리
-        break;
-      case 'done': // 결제 완료 처리
-        await butlerApi.post('/api/donation/verify', {
-          receiptId: response.data.receipt_id,
-          giverId: authentication.id,
-          receiverId: param.receiverId,
-          message: param.message,
-        });
-        break;
-      case 'confirm': //payload.extra.separately_confirmed = true; 일 경우 승인 전 해당 이벤트가 호출됨
-        break;
-    }
+    return () => {
+      document.head.removeChild(iamport);
+    };
+  }, []);
+
+  const submit = async () => {
+    const { PortOne } = window;
+
+    const response = await PortOne.requestPayment({
+      storeId: 'store-febc83d3-9229-4fcd-b8be-50c575b5fafa',
+      channelKey: 'channel-key-cc6b8ac2-d001-4ebb-9d65-d249d18dbd41',
+      paymentId: `payment-${uuid()}`,
+      orderName: '테스트 결제',
+      totalAmount: param.amount,
+      currency: 'CURRENCY_KRW',
+      payMethod: 'EASY_PAY',
+    });
+    console.log(response);
+
+    if (response.code) throw new Error(response.message);
+
+    await butlerApi.post('/api/donation/verify', {
+      paymentId: response.paymentId,
+      amount: param.amount,
+      giverId: authentication.id,
+      receiverId: param.receiverId,
+      message: param.message,
+    });
   };
 
   return { param, setParam, submit };
