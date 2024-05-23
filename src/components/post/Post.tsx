@@ -178,9 +178,11 @@ const Post = ({ post }: PostProps) => {
           <button className="ms-8" onClick={handleShare}>
             <FontAwesomeIcon icon={faShareFromSquare} size="lg" />
           </button>
-          <button className="ms-auto" onClick={handleDonation}>
-            <FontAwesomeIcon icon={faHandHoldingDollar} size="lg" />
-          </button>
+          {authentication.id !== post.writer.id && (
+            <button className="ms-auto" onClick={handleDonation}>
+              <FontAwesomeIcon icon={faHandHoldingDollar} size="lg" />
+            </button>
+          )}
         </div>
       </article>
 
