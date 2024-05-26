@@ -1,8 +1,8 @@
 import { PageRequest } from './Page';
 
 export interface SettlementListRequest extends PageRequest {
-  start: Date;
-  end: Date;
+  start: Date | null;
+  end: Date | null;
 }
 
 export interface SettlementListItem {
@@ -10,4 +10,8 @@ export interface SettlementListItem {
   createdAt: Date;
   amount: number;
   status: string;
+}
+
+export interface SettlementMonthlyResponse {
+  amount: number;
 }

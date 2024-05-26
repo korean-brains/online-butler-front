@@ -19,15 +19,18 @@ const useFetchSettlementList = (request: SettlementListRequest) => {
       request.size,
     ],
     async () => {
-      if (!request.start || !request.end) return;
       const response = await butlerApi.get<PageResponse<SettlementListItem>>(
         '/api/settlement',
         {
           params: {
             number: request.number,
             size: request.size,
-            start: dateFormat(request.start!, 'YYYY-MM-DDT00:00:00'),
-            end: dateFormat(request.end!, 'YYYY-MM-DDT23:59:59.999'),
+            start: request.start
+              ? dateFormat(request.start, 'YYYY-MM-DDT00:00:00')
+              : null,
+            end: request.end
+              ? dateFormat(request.end, 'YYYY-MM-DDT00:00:00')
+              : null,
           },
         },
       );

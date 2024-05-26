@@ -43,8 +43,9 @@ const PageButtons = ({ pagination, paginate }: PageButtonProps) => {
       {pageNumbers.map((number) => (
         <button
           key={number}
-          className={`border border-slate-200 px-3 py-2 hover:bg-indigo-100 ${number === pagination.number ? 'text-indigo-600' : 'text-gray-400 '}`}
+          className={`border border-slate-200 px-3 py-2 ${number === pagination.number ? 'text-indigo-600' : 'text-gray-400 hover:bg-indigo-100 '}`}
           onClick={() => paginate(number)}
+          disabled={number === pagination.number}
         >
           {number}
         </button>
