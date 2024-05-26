@@ -19,6 +19,7 @@ import SearchPage from './pages/SearchPage';
 import ProfileUpdatePage from './pages/ProfileUpdatePage';
 import MemberPage from './pages/MemberPage';
 import TagPostPage from './pages/TagPostPage';
+import SettlementPage from './pages/SettlementPage';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -91,6 +92,10 @@ const router = createBrowserRouter([
       {
         path: '/tag/:tag',
         element: <TagPostPage />,
+      },
+      {
+        path: '/settlement',
+        element: <SettlementPage />,
       },
     ],
   },

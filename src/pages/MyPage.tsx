@@ -58,9 +58,9 @@ const MyPage = () => {
               />
               <span className="ms-3">후원 내역</span>
             </Link>
-            <Link to={'/adjustment'}>
+            <Link to={'/settlement'}>
               <FontAwesomeIcon icon={faReceipt} className="w-[24px]" />
-              <span className="ms-3">정산하기</span>
+              <span className="ms-3">정산 내역</span>
             </Link>
             <button className="text-left">로그아웃</button>
             <button className="text-left">회원탈퇴</button>
