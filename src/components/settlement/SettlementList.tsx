@@ -29,7 +29,9 @@ const SettlementList = () => {
         ...prev,
         number: 1,
         start: dates[0],
-        end: dates[1],
+        end: dates[1]
+          ? new Date(dates[1].getFullYear(), dates[1].getMonth() + 1, 0)
+          : null,
       }));
     }
   };

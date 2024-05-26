@@ -29,7 +29,7 @@ const useFetchSettlementList = (request: SettlementListRequest) => {
               ? dateFormat(request.start, 'YYYY-MM-DDT00:00:00')
               : null,
             end: request.end
-              ? dateFormat(request.end, 'YYYY-MM-DDT00:00:00')
+              ? dateFormat(request.end, 'YYYY-MM-DDT23:59:59.999')
               : null,
           },
         },
