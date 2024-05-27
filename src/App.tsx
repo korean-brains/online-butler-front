@@ -20,6 +20,7 @@ import ProfileUpdatePage from './pages/ProfileUpdatePage';
 import MemberPage from './pages/MemberPage';
 import TagPostPage from './pages/TagPostPage';
 import SettlementPage from './pages/SettlementPage';
+import RequireAuth from './components/auth/RequireAuth';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -33,7 +34,11 @@ const queryClient = new QueryClient({
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <RootPage />,
+    element: (
+      <RequireAuth>
+        <RootPage />
+      </RequireAuth>
+    ),
     children: [
       {
         index: true,
@@ -55,16 +60,12 @@ const router = createBrowserRouter([
   },
   {
     path: '/',
-    element: <RootPageNoBottomNavigation />,
+    element: (
+      <RequireAuth>
+        <RootPageNoBottomNavigation />
+      </RequireAuth>
+    ),
     children: [
-      {
-        path: '/login',
-        element: <LoginPage />,
-      },
-      {
-        path: '/signup',
-        element: <SignupPage />,
-      },
       {
         path: '/post/write',
         element: <PostWritePage />,
@@ -98,6 +99,15 @@ const router = createBrowserRouter([
         element: <SettlementPage />,
       },
     ],
+  },
+
+  {
+    path: '/login',
+    element: <LoginPage />,
+  },
+  {
+    path: '/signup',
+    element: <SignupPage />,
   },
   {
     path: '/test',
