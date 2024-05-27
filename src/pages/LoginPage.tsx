@@ -1,16 +1,25 @@
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useLogin from '../hooks/useLogin';
+import { useContext, useEffect } from 'react';
+import { AuthenticationContext } from '../contexts/AuthenticationContext';
 
 const LoginPage = () => {
+  const { authentication } = useContext(AuthenticationContext);
   const { loginParam, setLoginParam, submit } = useLogin();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (authentication.isAuthenticated) {
+      navigate(location.state?.redirect || '/', { replace: true });
+    }
+  }, [authentication]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       await submit();
-      navigate(searchParams.get('redirect') || '/', { replace: true });
+      navigate(location.state?.redirect || '/', { replace: true });
     } catch (error) {
       alert('로그인 실패');
     }
@@ -56,20 +65,6 @@ const LoginPage = () => {
           회원가입
         </Link>
       </p>
-
-      <Link
-        to="/oauth/kakao"
-        className="btn-primary mt-16 w-full bg-yellow-300 text-gray-800"
-      >
-        카카오 로그인
-      </Link>
-
-      <Link
-        to="/oauth/kakao"
-        className="btn-primary mt-3 w-full bg-green-500  text-gray-800"
-      >
-        네이버 로그인
-      </Link>
     </div>
   );
 };

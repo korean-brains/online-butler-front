@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
-import { AuthenticationContext } from '../contexts/AuthenticationContext';
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -16,7 +15,6 @@ import useLogout from '../hooks/useLogout';
 
 const MyPage = () => {
   const navigate = useNavigate();
-  const { authentication } = useContext(AuthenticationContext);
   const { data: memberIntroduce, isLoading } = useFetchMyPage();
   const { logout } = useLogout();
 
@@ -26,12 +24,6 @@ const MyPage = () => {
     logout();
     navigate('/login');
   };
-
-  useEffect(() => {
-    if (!authentication.isAuthenticated) {
-      navigate('/login?redirect=/mypage', { replace: true });
-    }
-  }, [authentication, navigate]);
 
   if (isLoading) {
     return <>Loading...</>;
