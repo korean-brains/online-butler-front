@@ -8,4 +8,5 @@ export interface Authentication {
 export interface AuthenticationContextType {
   authentication: Authentication;
   setAuthentication: (authentication: Authentication) => void;
+  clearAuthentication: () => void;
 }

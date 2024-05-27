@@ -23,9 +23,13 @@ export const AuthenticationProvider = ({
     localStorage.setItem('authentication', JSON.stringify(authentication));
   }, [authentication]);
 
+  const clearAuthentication = () => {
+    setAuthentication(getInitialAuthentication());
+  };
+
   return (
     <AuthenticationContext.Provider
-      value={{ authentication, setAuthentication }}
+      value={{ authentication, setAuthentication, clearAuthentication }}
     >
       {children}
     </AuthenticationContext.Provider>
