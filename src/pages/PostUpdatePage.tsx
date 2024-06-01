@@ -1,7 +1,7 @@
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import HeaderBack from '../components/header/HeaderBack';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useFetchPost from '../hooks/useFetchPost';
 import useUpdatePost from '../hooks/useUpdatePost';
 import { useEffect, useState } from 'react';
@@ -14,6 +14,7 @@ const PostUpdatePage = () => {
     parseInt(id!),
   );
   const [tag, setTag] = useState<string>('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!isLoading && post) {
@@ -42,10 +43,19 @@ const PostUpdatePage = () => {
     }
   };
 
+  const onSubmit = async () => {
+    try {
+      await submit();
+      navigate(-1);
+    } catch (e: any) {
+      alert(e.message);
+    }
+  };
+
   return (
     <>
       <HeaderBack title="포스트 수정">
-        <button className="btn-primary px-6" onClick={submit}>
+        <button className="btn-primary px-6" onClick={onSubmit}>
           완료
         </button>
       </HeaderBack>

@@ -53,8 +53,12 @@ const PostWritePage = () => {
   };
 
   const onClickSubmit = async () => {
-    await submit();
-    navigate('/');
+    try {
+      await submit();
+      navigate('/');
+    } catch (e: any) {
+      alert(e.message);
+    }
   };
 
   return (

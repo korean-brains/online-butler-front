@@ -38,7 +38,7 @@ const useWriteReply = (commentId: number, rootCommentId: number) => {
     });
   };
   const validateParam = () => {
-    if (!param.text) {
+    if (!param.text.trim()) {
       throw new Error('댓글을 작성해 주세요.');
     }
   };
