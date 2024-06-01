@@ -35,8 +35,12 @@ const ProfileUpdatePage = () => {
   }, [image, setParam]);
 
   const handleSubmit = async () => {
-    await submit();
-    navigate('/mypage', { replace: true });
+    try {
+      await submit();
+      navigate('/mypage', { replace: true });
+    } catch (e: any) {
+      alert(e.message);
+    }
   };
 
   const handleChangeNickname = (event: React.ChangeEvent<HTMLInputElement>) => {

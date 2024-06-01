@@ -33,6 +33,13 @@ const useWritePost = () => {
   );
 
   const submit = async () => {
+    if (param.images.length === 0) {
+      throw new Error('이미지를 추가해주세요.');
+    }
+    if (!param.caption.trim()) {
+      throw new Error('포스트 내용을 입력해주세요.');
+    }
+
     const response = await mutation.mutateAsync(param);
     return response.data;
   };

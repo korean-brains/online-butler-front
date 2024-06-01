@@ -35,6 +35,10 @@ const useUpdatePost = (postId: number) => {
   );
 
   const submit = async () => {
+    if (!param.caption.trim()) {
+      throw new Error('포스트 내용을 입력해주세요.');
+    }
+
     await mutation.mutateAsync(postId);
   };
 

@@ -25,6 +25,13 @@ const useUpdateProfile = () => {
   });
 
   const submit = async () => {
+    if (!param.name.trim()) {
+      throw new Error('별명을 입력해주세요.');
+    }
+    if (!param.introduction.trim()) {
+      throw new Error('자기소개를 입력해주세요.');
+    }
+
     const response = await mutation.mutateAsync(param);
     return response.data;
   };
