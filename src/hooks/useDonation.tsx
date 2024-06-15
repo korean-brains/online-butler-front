@@ -32,15 +32,14 @@ const useDonation = () => {
     const { PortOne } = window;
 
     const response = await PortOne.requestPayment({
-      storeId: 'store-febc83d3-9229-4fcd-b8be-50c575b5fafa',
-      channelKey: 'channel-key-cc6b8ac2-d001-4ebb-9d65-d249d18dbd41',
+      storeId: `${process.env.REACT_APP_IAMPORT_STORE_KEY}`,
+      channelKey: `${process.env.REACT_APP_IAMPORT_CHANNEL_KEY}`,
       paymentId: `payment-${uuid()}`,
       orderName: '테스트 결제',
       totalAmount: param.amount,
       currency: 'CURRENCY_KRW',
       payMethod: 'EASY_PAY',
     });
-    console.log(response);
 
     if (response.code) throw new Error(response.message);
 
